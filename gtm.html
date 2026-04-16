@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTM Audit — TassoMutuo | MOCA Interactive</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E52217;
+    --red-light: #FF5147;
+    --red-pale: #FFE7E6;
+    --dark: #191919;
+    --grey: #595959;
+    --grey-light: #F4F5F6;
+    --white: #FFFFFF;
+    --green: #118541;
+    --blue: #5781FF;
+    --purple: #551FC4;
+    --orange: #DB5E29;
+    --border: #E8E9EB;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Figtree', sans-serif;
+    background: var(--grey-light);
+    color: var(--dark);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark);
+    padding: 32px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--red);
+  }
+  .header-logo img { height: 32px; }
+  .header-meta { text-align: right; }
+  .header-meta .label { color: #888; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
+  .header-meta .title { color: var(--white); font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .header-meta .date { color: var(--red-light); font-size: 12px; font-weight: 500; }
+
+  /* LAYOUT */
+  .wrapper { max-width: 1400px; margin: 0 auto; padding: 40px 48px; }
+
+  /* SUMMARY STRIP */
+  .summary-strip {
+    background: var(--white);
+    border-radius: 8px;
+    border-left: 4px solid var(--red);
+    padding: 24px 32px;
+    margin-bottom: 32px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+  }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 36px; font-weight: 800; color: var(--dark); line-height: 1; }
+  .stat-num.red { color: var(--red); }
+  .stat-num.green { color: var(--green); }
+  .stat-num.orange { color: var(--orange); }
+  .stat-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--grey); margin-top: 4px; font-weight: 600; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--grey);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 12px;
+    height: 3px;
+    background: var(--red);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ACCOUNT CARD */
+  .account-block { margin-bottom: 48px; }
+  .account-header {
+    background: var(--dark);
+    color: var(--white);
+    padding: 20px 28px;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .account-name { font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .account-id { font-size: 11px; color: #888; font-family: monospace; }
+  .account-body { background: var(--white); border-radius: 0 0 8px 8px; overflow: hidden; }
+
+  /* CONTAINER CARD */
+  .container-card {
+    border-bottom: 1px solid var(--border);
+    padding: 24px 28px;
+  }
+  .container-card:last-child { border-bottom: none; }
+
+  .container-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .container-name { font-size: 18px; font-weight: 700; color: var(--dark); }
+  .container-id {
+    font-family: monospace;
+    font-size: 12px;
+    background: var(--grey-light);
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: var(--grey);
+    font-weight: 600;
+  }
+  .container-meta { display: flex; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+  .badge {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .badge-web { background: #EEF2FF; color: var(--blue); }
+  .badge-server { background: #F0FFF4; color: var(--green); }
+  .badge-paused { background: #FFF5F5; color: var(--red); }
+  .badge-active { background: #F0FFF4; color: var(--green); }
+  .badge-test { background: #FFF8E7; color: var(--orange); }
+  .badge-warning { background: #FFF8E7; color: var(--orange); }
+
+  /* KPI ROW */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .kpi-box {
+    background: var(--grey-light);
+    border-radius: 6px;
+    padding: 14px 16px;
+    text-align: center;
+    border-top: 3px solid transparent;
+  }
+  .kpi-box.kpi-tags { border-top-color: var(--blue); }
+  .kpi-box.kpi-triggers { border-top-color: var(--purple); }
+  .kpi-box.kpi-variables { border-top-color: var(--green); }
+  .kpi-box.kpi-versions { border-top-color: var(--orange); }
+  .kpi-n { font-size: 28px; font-weight: 800; color: var(--dark); line-height: 1; }
+  .kpi-l { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--grey); margin-top: 2px; }
+
+  /* TABLES */
+  .table-wrap { overflow-x: auto; margin-bottom: 20px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  thead tr { background: var(--dark); }
+  thead th {
+    color: var(--white);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: var(--grey-light); }
+  tbody td { padding: 9px 12px; color: var(--grey); vertical-align: middle; }
+  tbody td.name { color: var(--dark); font-weight: 600; }
+  tbody td.mono { font-family: monospace; font-size: 11px; color: var(--blue); }
+
+  .status-dot {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    margin-right: 5px;
+  }
+  .dot-active { background: var(--green); }
+  .dot-paused { background: var(--red); }
+
+  /* TABS */
+  .tabs { display: flex; gap: 4px; margin-bottom: 0; flex-wrap: wrap; }
+  .tab {
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    cursor: pointer;
+    border-radius: 6px 6px 0 0;
+    border: none;
+    background: var(--grey-light);
+    color: var(--grey);
+    transition: all 0.15s;
+    border-bottom: 3px solid transparent;
+  }
+  .tab:hover { background: #E8E9EB; }
+  .tab.active { background: var(--white); color: var(--red); border-bottom-color: var(--red); }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ALERT BOXES */
+  .alerts { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .alert {
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 12px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    border: 1px solid transparent;
+  }
+  .alert-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+  .alert-warn { background: #FFFBEB; border-color: #FDE68A; }
+  .alert-warn .alert-title { color: #92400E; font-weight: 700; font-size: 11px; text-transform: uppercase; }
+  .alert-warn .alert-body { color: #78350F; margin-top: 2px; }
+  .alert-info { background: #EFF6FF; border-color: #BFDBFE; }
+  .alert-info .alert-title { color: #1E40AF; font-weight: 700; font-size: 11px; text-transform: uppercase; }
+  .alert-info .alert-body { color: #1E3A8A; margin-top: 2px; }
+  .alert-ok { background: #F0FFF4; border-color: #BBF7D0; }
+  .alert-ok .alert-title { color: #14532D; font-weight: 700; font-size: 11px; text-transform: uppercase; }
+  .alert-ok .alert-body { color: #166534; margin-top: 2px; }
+
+  /* VERSION HISTORY */
+  .version-bar {
+    height: 6px;
+    background: linear-gradient(90deg, var(--red-pale) 0%, var(--red) 100%);
+    border-radius: 3px;
+    margin-bottom: 8px;
+  }
+  .version-list { display: flex; flex-wrap: wrap; gap: 4px; }
+  .version-chip {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 3px;
+    background: var(--grey-light);
+    color: var(--grey);
+    font-family: monospace;
+  }
+  .version-chip.latest {
+    background: var(--red);
+    color: white;
+    font-weight: 700;
+  }
+
+  /* FOLDER TAGS */
+  .folder-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+  .folder-chip {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 4px;
+    background: var(--dark);
+    color: var(--white);
+  }
+
+  /* WORKSPACE NOTICE */
+  .workspace-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .workspace-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 5px 14px;
+    border-radius: 4px;
+    background: var(--grey-light);
+    color: var(--dark);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .workspace-badge svg { width: 12px; height: 12px; }
+
+  /* OBSERVATIONS */
+  .observations { margin-top: 24px; }
+  .obs-item {
+    display: flex;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+  }
+  .obs-item:last-child { border-bottom: none; }
+  .obs-num { color: var(--red); font-weight: 800; font-size: 14px; flex-shrink: 0; width: 20px; }
+  .obs-text { color: var(--grey); }
+  .obs-text strong { color: var(--dark); }
+
+  /* FOOTER */
+  .footer {
+    background: var(--dark);
+    color: #666;
+    text-align: center;
+    padding: 24px 48px;
+    font-size: 11px;
+    margin-top: 48px;
+    border-top: 3px solid var(--red);
+  }
+  .footer img { height: 20px; opacity: 0.4; vertical-align: middle; margin-right: 8px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .wrapper { padding: 24px 20px; }
+    .summary-strip { grid-template-columns: repeat(3, 1fr); }
+    .kpi-row { grid-template-columns: repeat(2, 1fr); }
+    .header { padding: 20px 24px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .header { position: relative; }
+    body { font-size: 11px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-logo">
+    <img src="https://mocainteractive.com/assets/svg/logo-light.svg" alt="MOCA Interactive">
+  </div>
+  <div class="header-meta">
+    <div class="label">Audit Report</div>
+    <div class="title">GTM — TassoMutuo</div>
+    <div class="date">Generato il 16 aprile 2026</div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="wrapper">
+
+  <!-- RIEPILOGO GLOBALE -->
+  <div class="section-title">Riepilogo globale</div>
+  <div class="summary-strip">
+    <div class="stat-item">
+      <div class="stat-num">3</div>
+      <div class="stat-label">Account GTM</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Container totali</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num red">80</div>
+      <div class="stat-label">Tag (prod)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">86</div>
+      <div class="stat-label">Trigger (prod)</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">104</div>
+      <div class="stat-label">Variabili (prod)</div>
+    </div>
+  </div>
+
+  <!-- OSSERVAZIONI GENERALI -->
+  <div class="section-title">Osservazioni generali</div>
+  <div class="alerts">
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div>
+        <div class="alert-title">Container vuoti</div>
+        <div class="alert-body">Due account (GTM-AW-11093796799 e GTM-G-VLWGDJ3VZN) contengono container senza tag pubblicati. Valutare se sono in uso o da dismettere.</div>
+      </div>
+    </div>
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div>
+        <div class="alert-title">Tag Google Ads in pausa</div>
+        <div class="alert-body">Nel container di produzione (GTM-DRHC5QQ) sono presenti 9 tag Google Ads in stato "paused". Verificare se sono intenzionalmente disattivati o da eliminare.</div>
+      </div>
+    </div>
+    <div class="alert alert-info">
+      <div class="alert-icon">ℹ</div>
+      <div>
+        <div class="alert-title">Server-Side tracking attivo</div>
+        <div class="alert-body">Il container server GTM-TBP9CXC gestisce Conversion API di Facebook, Google Ads offline e TikTok. Architettura correttamente separata client/server.</div>
+      </div>
+    </div>
+    <div class="alert alert-ok">
+      <div class="alert-icon">✓</div>
+      <div>
+        <div class="alert-title">Consent Mode v2 implementato</div>
+        <div class="alert-body">Presente il tag "Google Consent Mode - Default - Forced" con aggiornamento via Cookiebot. Versione 33 denominata "MOCA - Consent Mode v2".</div>
+      </div>
+    </div>
+    <div class="alert alert-ok">
+      <div class="alert-icon">✓</div>
+      <div>
+        <div class="alert-title">Struttura folder organizzata</div>
+        <div class="alert-body">Entrambi i container principali usano folder per categoria (GA4, Facebook, Google Ads, Hotjar, Cookiebot, VWO, TikTok, Hubspot).</div>
+      </div>
+    </div>
+    <div class="alert alert-warn">
+      <div class="alert-icon">⚠</div>
+      <div>
+        <div class="alert-title">Workspace extra in produzione</div>
+        <div class="alert-body">Nel container GTM-DRHC5QQ esiste un workspace "Esercitazione formazione" (id 67) oltre al Default. Verificare se contiene modifiche non pubblicate.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ACCOUNT 1 ===================== -->
+  <div class="account-block">
+    <div class="account-header">
+      <div>
+        <div class="account-name">TassoMutuo.it</div>
+        <div class="account-id">Account ID: 6080855706</div>
+      </div>
+      <span class="badge badge-warning">Container vuoto</span>
+    </div>
+    <div class="account-body">
+      <div class="container-card">
+        <div class="container-header">
+          <div>
+            <div class="container-name">TassoMutuo.it</div>
+            <div class="container-meta">
+              <span class="badge badge-web">Web</span>
+              <span class="badge badge-warning">Nessun tag pubblicato</span>
+            </div>
+          </div>
+          <div class="container-id">GTM: AW-11093796799 / GT-TX58C7Q</div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-box kpi-tags"><div class="kpi-n">0</div><div class="kpi-l">Tag</div></div>
+          <div class="kpi-box kpi-triggers"><div class="kpi-n">0</div><div class="kpi-l">Trigger</div></div>
+          <div class="kpi-box kpi-variables"><div class="kpi-n">0</div><div class="kpi-l">Variabili</div></div>
+          <div class="kpi-box kpi-versions"><div class="kpi-n">4</div><div class="kpi-l">Versioni</div></div>
+        </div>
+
+        <div class="section-title">Workspace</div>
+        <div class="workspace-row">
+          <div class="workspace-badge">Default Workspace (id: 0)</div>
+        </div>
+
+        <div class="section-title">Storico versioni</div>
+        <div class="version-list" style="margin-bottom:16px">
+          <span class="version-chip">v1 — Empty Container</span>
+          <span class="version-chip">v2</span>
+          <span class="version-chip">v3</span>
+          <span class="version-chip latest">v4 — Corrente</span>
+        </div>
+
+        <div class="alert alert-warn" style="margin-top:8px">
+          <div class="alert-icon">⚠</div>
+          <div>
+            <div class="alert-title">Nessun tag nel workspace corrente</div>
+            <div class="alert-body">Il container è associato a tag ID Google Ads (AW-11093796799) e un ID Google Tag (GT-TX58C7Q), ma il workspace non contiene tag configurati. Probabilmente questo account è stato creato per gestire le conversioni Google Ads in modo nativo, ma il tracking è migrato al container principale o al server-side.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ACCOUNT 2 ===================== -->
+  <div class="account-block">
+    <div class="account-header">
+      <div>
+        <div class="account-name">TassoMutuo</div>
+        <div class="account-id">Account ID: 6266506288</div>
+      </div>
+      <span class="badge badge-warning">Container vuoto</span>
+    </div>
+    <div class="account-body">
+      <div class="container-card">
+        <div class="container-header">
+          <div>
+            <div class="container-name">TassoMutuo</div>
+            <div class="container-meta">
+              <span class="badge badge-web">Web</span>
+              <span class="badge badge-warning">Nessun tag pubblicato</span>
+            </div>
+          </div>
+          <div class="container-id">GTM: G-VLWGDJ3VZN / GT-WPL6SGZH</div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-box kpi-tags"><div class="kpi-n">0</div><div class="kpi-l">Tag</div></div>
+          <div class="kpi-box kpi-triggers"><div class="kpi-n">0</div><div class="kpi-l">Trigger</div></div>
+          <div class="kpi-box kpi-variables"><div class="kpi-n">0</div><div class="kpi-l">Variabili</div></div>
+          <div class="kpi-box kpi-versions"><div class="kpi-n">1</div><div class="kpi-l">Versioni</div></div>
+        </div>
+
+        <div class="section-title">Workspace</div>
+        <div class="workspace-row">
+          <div class="workspace-badge">Default Workspace (id: 0)</div>
+        </div>
+
+        <div class="section-title">Storico versioni</div>
+        <div class="version-list" style="margin-bottom:16px">
+          <span class="version-chip latest">v1 — Empty Container</span>
+        </div>
+
+        <div class="alert alert-warn" style="margin-top:8px">
+          <div class="alert-icon">⚠</div>
+          <div>
+            <div class="alert-title">Account mai utilizzato</div>
+            <div class="alert-body">L'account è associato a un ID GA4 (G-VLWGDJ3VZN) e un Google Tag (GT-WPL6SGZH), ma il container contiene solo la versione vuota iniziale. Valutare se dismettere o se era destinato a un uso che non è mai partito.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== ACCOUNT 3 ===================== -->
+  <div class="account-block">
+    <div class="account-header">
+      <div>
+        <div class="account-name">TassoMutuo.it — Multi-Container</div>
+        <div class="account-id">Account ID: 6072151776</div>
+      </div>
+      <span class="badge badge-active">Principale</span>
+    </div>
+    <div class="account-body">
+
+      <!-- CONTAINER PRODUZIONE -->
+      <div class="container-card">
+        <div class="container-header">
+          <div>
+            <div class="container-name">TassoMutuo.it Produzione</div>
+            <div class="container-meta">
+              <span class="badge badge-web">Web</span>
+              <span class="badge badge-active">Attivo</span>
+            </div>
+          </div>
+          <div class="container-id">GTM-DRHC5QQ</div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-box kpi-tags"><div class="kpi-n">80</div><div class="kpi-l">Tag</div></div>
+          <div class="kpi-box kpi-triggers"><div class="kpi-n">62</div><div class="kpi-l">Trigger</div></div>
+          <div class="kpi-box kpi-variables"><div class="kpi-n">55</div><div class="kpi-l">Variabili</div></div>
+          <div class="kpi-box kpi-versions"><div class="kpi-n">76</div><div class="kpi-l">Versioni</div></div>
+        </div>
+
+        <div class="section-title">Workspace</div>
+        <div class="workspace-row">
+          <div class="workspace-badge">Default Workspace (id: 88) — Corrente</div>
+          <div class="workspace-badge badge-warning" style="border-color:#FDE68A; background:#FFFBEB; color:#92400E">Esercitazione formazione (id: 67)</div>
+        </div>
+
+        <div class="section-title">Folder organizzative</div>
+        <div class="folder-grid" style="margin-bottom:20px">
+          <span class="folder-chip">GA4</span>
+          <span class="folder-chip">Google Ads</span>
+          <span class="folder-chip">Facebook</span>
+          <span class="folder-chip">HotJar</span>
+          <span class="folder-chip">CookieBot</span>
+          <span class="folder-chip">VWO</span>
+          <span class="folder-chip">TikTok</span>
+          <span class="folder-chip">Hubspot</span>
+          <span class="folder-chip">Stape</span>
+        </div>
+
+        <div class="section-title">Built-in variables abilitate</div>
+        <div class="folder-grid" style="margin-bottom:24px">
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Click Element</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Click ID</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Click Classes</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Click URL</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Click Text</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Form Element</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Form Classes</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Form ID</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Form URL</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Page URL</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Page Hostname</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Page Path</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Referrer</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">Event</span>
+          <span class="folder-chip" style="background:var(--grey-light);color:var(--dark)">History Source/State/Fragment</span>
+        </div>
+
+        <!-- TABS PRODUZIONE -->
+        <div class="tabs" id="tabs-prod">
+          <button class="tab active" onclick="switchTab('prod','tags')">Tag (80)</button>
+          <button class="tab" onclick="switchTab('prod','triggers')">Trigger (62)</button>
+          <button class="tab" onclick="switchTab('prod','variables')">Variabili (55)</button>
+          <button class="tab" onclick="switchTab('prod','versions')">Versioni (76)</button>
+        </div>
+
+        <!-- TAGS -->
+        <div id="prod-tags" class="tab-content active">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th><th>Stato</th><th>Firing Trigger</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">48</td><td class="name">Cookiebot CMP</td><td>Custom (CMP)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>Consent Initialization</td></tr>
+                <tr><td class="mono">159</td><td class="name">Google Consent Mode - Default - Forced</td><td>Custom (GCM)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>Consent Initialization</td></tr>
+                <tr><td class="mono">160</td><td class="name">Google Consent Mode - Update - Forced</td><td>Custom (GCM)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>History Change / cookie_consent_update</td></tr>
+                <tr><td class="mono">138</td><td class="name">GA4 - Configuration</td><td>googtag</td><td><span class="status-dot dot-active"></span>Attivo</td><td>All Pages</td></tr>
+                <tr><td class="mono">12</td><td class="name">GA4 - Event - calcola_rata</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - calcola_rata</td></tr>
+                <tr><td class="mono">13</td><td class="name">GA4 - Event - ottieni_mutuo</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - ottieni_mutuo</td></tr>
+                <tr><td class="mono">18</td><td class="name">GA4 - Event - pagina_contatti</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - contattaci</td></tr>
+                <tr><td class="mono">19</td><td class="name">GA4 - Event - visualizzazione_rata</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - visualizzazione_rata_all</td></tr>
+                <tr><td class="mono">28</td><td class="name">GA4 - Event - richiesta_inviata</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead</td></tr>
+                <tr><td class="mono">30</td><td class="name">GA4 - Event - flow_start</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - flow_start</td></tr>
+                <tr><td class="mono">37</td><td class="name">GA4 - Event - visualizzazione_consulenza</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - consulenza</td></tr>
+                <tr><td class="mono">63</td><td class="name">GA4 - Event - richiesta_valutazione</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - form_submit - valutazione</td></tr>
+                <tr><td class="mono">69</td><td class="name">GA4 - Event - clic_to_call</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>click - tel</td></tr>
+                <tr><td class="mono">144</td><td class="name">GA4 - Event - user_consent</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>YES - gtm_consent_update - marketing</td></tr>
+                <tr><td class="mono">157</td><td class="name">GA4 - Event - lead - META</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead</td></tr>
+                <tr><td class="mono">168</td><td class="name">GA4 - Event - Core Web Vitals</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - coreWebVitals</td></tr>
+                <tr><td class="mono">186</td><td class="name">GA4 - Event - form_funnel</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - all flow steps / event - lead</td></tr>
+                <tr><td class="mono">229</td><td class="name">GA4 - Event - cro_event - view all forms</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>pageview - view all forms</td></tr>
+                <tr><td class="mono">230</td><td class="name">GA4 - Event - cro_event - lead</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead - type consulenza</td></tr>
+                <tr><td class="mono">231</td><td class="name">GA4 - Event - cro_event - lead all</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead</td></tr>
+                <tr><td class="mono">232</td><td class="name">GA4 - Event - cro_event - view form</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>pageview - view form from step10</td></tr>
+                <tr><td class="mono">233</td><td class="name">GA4 - Event - cro_event - vis. step 10</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>pageview - view step10 - consulenza</td></tr>
+                <tr><td class="mono">235</td><td class="name">GA4 - event - experience_impression</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - vwo-data-push-ga4</td></tr>
+                <tr><td class="mono">239</td><td class="name">GA4 - Event - cro_event - buttons clicks</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>click - cro elements - ab test</td></tr>
+                <tr><td class="mono">261</td><td class="name">GA4 - Event - fido_check_phone</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - fido_check_phone</td></tr>
+                <tr><td class="mono">267</td><td class="name">cHTML - VWO event - Split test - completamento step 2</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event split test x2</td></tr>
+                <tr><td class="mono">268</td><td class="name">GA4 - Event - cro_event - split_step_2</td><td>gaawe</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event split test x2</td></tr>
+                <tr><td class="mono">56</td><td class="name">Facebook - Lead Inviata</td><td>Custom (Meta Pixel)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead (blocking: NO marketing)</td></tr>
+                <tr><td class="mono">53</td><td class="name">Facebook - Pageview</td><td>Custom (Meta Pixel)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>YES - gtm_consent_update - marketing</td></tr>
+                <tr><td class="mono">57</td><td class="name">Facebook - StartFlow</td><td>Custom (Meta Pixel)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - flow_start (blocking: NO marketing)</td></tr>
+                <tr><td class="mono">58</td><td class="name">Facebook - Visualizzazione_Consulenza</td><td>Custom (Meta Pixel)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - consulenza (blocking: NO marketing)</td></tr>
+                <tr><td class="mono">59</td><td class="name">Facebook - calcola_rata</td><td>Custom (Meta Pixel)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - calcola_rata (blocking: NO marketing)</td></tr>
+                <tr><td class="mono">60</td><td class="name">Facebook - ottieni_mutuo</td><td>Custom (Meta Pixel)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - ottieni_mutuo (blocking: NO marketing)</td></tr>
+                <tr><td class="mono">64</td><td class="name">Facebook - Richiesta Valutazione</td><td>Custom (Meta Pixel)</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - form_submit - valutazione (blocking: NO marketing)</td></tr>
+                <tr><td class="mono">71</td><td class="name">Conversion Linker</td><td>gclidw</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>All Pages / YES marketing</td></tr>
+                <tr><td class="mono">72</td><td class="name">GADS | 2 - ottieni_mutuo</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - ottieni_mutuo</td></tr>
+                <tr><td class="mono">73</td><td class="name">GADS - StartFlow</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - flow_start</td></tr>
+                <tr><td class="mono">74</td><td class="name">GADS - Lead Inviata</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - lead</td></tr>
+                <tr><td class="mono">75</td><td class="name">GADS | 1 - calcola_rata</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - calcola_rata</td></tr>
+                <tr><td class="mono">76</td><td class="name">GADS - Visualizzazione_Consulenza</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - consulenza</td></tr>
+                <tr><td class="mono">77</td><td class="name">GADS - Remarketing</td><td>sp</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>All Pages</td></tr>
+                <tr><td class="mono">90</td><td class="name">GADS - User Data Global</td><td>awud</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>All Pages</td></tr>
+                <tr><td class="mono">94</td><td class="name">Gads - learning display</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - display_learning</td></tr>
+                <tr><td class="mono">20</td><td class="name">GADS - Visualizzazione-rata</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - visualizzazione_rata_all</td></tr>
+                <tr><td class="mono">21</td><td class="name">GADS - Visualizzazione Contattaci</td><td>awct</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>event - contattaci</td></tr>
+                <tr><td class="mono">31</td><td class="name">GADS - Remarketing - All</td><td>sp</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>cookie_consent_update</td></tr>
+                <tr><td class="mono">15</td><td class="name">Hotjar - Pixel base</td><td>hjtc</td><td><span class="status-dot dot-active"></span>Attivo</td><td>YES cookie_consent_statistics</td></tr>
+                <tr><td class="mono">29</td><td class="name">Hotjar - Ottieni_Mutuo</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - ottieni_mutuo</td></tr>
+                <tr><td class="mono">34</td><td class="name">Hotjar - Lead</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead</td></tr>
+                <tr><td class="mono">38</td><td class="name">Hotjar - Visualizzazione_Consulenza</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - consulenza</td></tr>
+                <tr><td class="mono">92</td><td class="name">HotJar - verifica-fattibilita-open</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - verifica_fattibilita_open</td></tr>
+                <tr><td class="mono">243</td><td class="name">HotJar - vwo-variant</td><td>Custom HJ</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - vwo-data-push-ga4</td></tr>
+                <tr><td class="mono">262</td><td class="name">Hotjar - fido_check_phone</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - fido_check_phone</td></tr>
+                <tr><td class="mono">275</td><td class="name">Hotjar - approfondimento-altro</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - finalità con precedente risposta altro</td></tr>
+                <tr><td class="mono">282</td><td class="name">Hotjar - abbandono-flusso</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - engagement_15s_funnel</td></tr>
+                <tr><td class="mono">284</td><td class="name">Hotjar - abbandono-form</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - engagement_25s_lead_form</td></tr>
+                <tr><td class="mono">33</td><td class="name">Hubspot embed</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>Consent Initialization</td></tr>
+                <tr><td class="mono">162</td><td class="name">cHTML - coreWebVitals</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>All Pages</td></tr>
+                <tr><td class="mono">219</td><td class="name">cHTML - VWO event - Vis. step 10</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>pageview - view step10 - consulenza</td></tr>
+                <tr><td class="mono">221</td><td class="name">cHTML - VWO event - Lead consulenza</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead - type consulenza</td></tr>
+                <tr><td class="mono">223</td><td class="name">cHTML - VWO event - Lead all</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead</td></tr>
+                <tr><td class="mono">224</td><td class="name">cHTML - VWO event - Visualizzazione form</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>pageview - view form from step10</td></tr>
+                <tr><td class="mono">227</td><td class="name">cHTML - VWO event - Visualizzazione tutti i form</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>pageview - view all forms</td></tr>
+                <tr><td class="mono">246</td><td class="name">cHTML - VWO event - Lead verifica fattibilità</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead - type verifica fattibilità</td></tr>
+                <tr><td class="mono">248</td><td class="name">cHTML - VWO event - Lead verifica fattibilità open</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead - type verifica fattibilità open</td></tr>
+                <tr><td class="mono">277</td><td class="name">cHTML - set cookie finalità altro</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - finalità con precedente risposta altro</td></tr>
+                <tr><td class="mono">278</td><td class="name">cHTML - set cookie richiesta inviata</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead</td></tr>
+                <tr><td class="mono">293</td><td class="name">chtml - abbandono-flusso</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>History Change</td></tr>
+                <tr><td class="mono">295</td><td class="name">chtml - abbandono-form</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>History Change</td></tr>
+                <tr><td class="mono">270</td><td class="name">TikTok - Pixel code</td><td>HTML</td><td><span class="status-dot dot-active"></span>Attivo</td><td>YES - gtm_consent_update - marketing</td></tr>
+                <tr><td class="mono">273</td><td class="name">TikTok - SubmitForm</td><td>Custom TikTok</td><td><span class="status-dot dot-active"></span>Attivo</td><td>event - lead (blocking: NO marketing)</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-warn" style="margin-top:12px">
+            <div class="alert-icon">⚠</div>
+            <div>
+              <div class="alert-title">9 tag Google Ads in pausa</div>
+              <div class="alert-body">I tag di conversione Google Ads (awct) sono tutti in pausa. Il tracking conversioni GAds avviene presumibilmente attraverso il container server-side GTM-TBP9CXC. Verificare se questi tag sono stati intenzionalmente sostituiti o se sono residui da pulire.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TRIGGERS -->
+        <div id="prod-triggers" class="tab-content">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">2147479572</td><td class="name">Consent Initialization - All Pages</td><td>consentInit</td></tr>
+                <tr><td class="mono">2147479553</td><td class="name">All Pages</td><td>pageview</td></tr>
+                <tr><td class="mono">108</td><td class="name">YES - gtm_consent_update - marketing</td><td>customEvent</td></tr>
+                <tr><td class="mono">114</td><td class="name">event - gtm_consent_update - yes marketing</td><td>customEvent</td></tr>
+                <tr><td class="mono">101</td><td class="name">event - cookiebot - cookie_consent_update</td><td>customEvent</td></tr>
+                <tr><td class="mono">103</td><td class="name">NO - cookie_consent_statistics</td><td>customEvent</td></tr>
+                <tr><td class="mono">105</td><td class="name">NO - cookie_consent_marketing</td><td>customEvent</td></tr>
+                <tr><td class="mono">107</td><td class="name">YES - cookie_consent_preferences</td><td>customEvent</td></tr>
+                <tr><td class="mono">110</td><td class="name">YES - cookie_consent_statistics</td><td>customEvent</td></tr>
+                <tr><td class="mono">112</td><td class="name">NO - cookie_consent_preferences</td><td>customEvent</td></tr>
+                <tr><td class="mono">6</td><td class="name">event - calcola_rata</td><td>customEvent</td></tr>
+                <tr><td class="mono">8</td><td class="name">event - ottieni_mutuo</td><td>customEvent</td></tr>
+                <tr><td class="mono">16</td><td class="name">event - contattaci</td><td>customEvent</td></tr>
+                <tr><td class="mono">17</td><td class="name">event - visualizzazione_rata_all</td><td>customEvent</td></tr>
+                <tr><td class="mono">24</td><td class="name">event - flow_start</td><td>customEvent</td></tr>
+                <tr><td class="mono">26</td><td class="name">event - lead</td><td>customEvent</td></tr>
+                <tr><td class="mono">35</td><td class="name">event - consulenza</td><td>customEvent</td></tr>
+                <tr><td class="mono">42</td><td class="name">click - lead submit</td><td>click</td></tr>
+                <tr><td class="mono">61</td><td class="name">event - form_submit - valutazione</td><td>customEvent</td></tr>
+                <tr><td class="mono">65</td><td class="name">click - estimator-list-button</td><td>click</td></tr>
+                <tr><td class="mono">68</td><td class="name">click - tel</td><td>linkClick</td></tr>
+                <tr><td class="mono">91</td><td class="name">event - verifica_fattibilita_open</td><td>customEvent</td></tr>
+                <tr><td class="mono">93</td><td class="name">event - display_learning</td><td>customEvent</td></tr>
+                <tr><td class="mono">158</td><td class="name">IS SEO</td><td>customEvent</td></tr>
+                <tr><td class="mono">165</td><td class="name">event - coreWebVitals</td><td>customEvent</td></tr>
+                <tr><td class="mono">184</td><td class="name">event - inizio_flusso</td><td>customEvent</td></tr>
+                <tr><td class="mono">185</td><td class="name">event - all flow steps</td><td>customEvent</td></tr>
+                <tr><td class="mono">213</td><td class="name">History Change</td><td>historyChange</td></tr>
+                <tr><td class="mono">216</td><td class="name">event - cro flow steps</td><td>customEvent</td></tr>
+                <tr><td class="mono">218</td><td class="name">pageview - view step10 - consulenza</td><td>pageview</td></tr>
+                <tr><td class="mono">222</td><td class="name">event - lead - type consulenza</td><td>customEvent</td></tr>
+                <tr><td class="mono">225</td><td class="name">pageview - view form from step10</td><td>pageview</td></tr>
+                <tr><td class="mono">226</td><td class="name">pageview - view all forms</td><td>pageview</td></tr>
+                <tr><td class="mono">234</td><td class="name">event - vwo-data-push-ga4</td><td>customEvent</td></tr>
+                <tr><td class="mono">238</td><td class="name">click - cro elements - ab test</td><td>click</td></tr>
+                <tr><td class="mono">245</td><td class="name">event - lead - type verifica fattibilità</td><td>customEvent</td></tr>
+                <tr><td class="mono">247</td><td class="name">event - lead - type verifica fattibilità open</td><td>customEvent</td></tr>
+                <tr><td class="mono">260</td><td class="name">event - fido_check_phone</td><td>customEvent</td></tr>
+                <tr><td class="mono">265</td><td class="name">event - 6_-_finalità - split test</td><td>customEvent</td></tr>
+                <tr><td class="mono">266</td><td class="name">event - 2_-_valore_immobile - split test</td><td>customEvent</td></tr>
+                <tr><td class="mono">274</td><td class="name">pv - trigger abbandono-flusso</td><td>pageview</td></tr>
+                <tr><td class="mono">276</td><td class="name">event - finalità con precedente risposta altro</td><td>customEvent</td></tr>
+                <tr><td class="mono">281</td><td class="name">trigger abbandono-flusso</td><td>customEvent</td></tr>
+                <tr><td class="mono">283</td><td class="name">trigger abbandono-form</td><td>historyChange</td></tr>
+                <tr><td class="mono">292</td><td class="name">Copy of trigger abbandono-flusso</td><td>historyChange</td></tr>
+                <tr><td class="mono">294</td><td class="name">event - engagement_15s_funnel</td><td>customEvent</td></tr>
+                <tr><td class="mono">296</td><td class="name">event - engagement_25s_lead_form</td><td>customEvent</td></tr>
+                <tr><td class="mono">187</td><td class="name">event - 2_-_valore_immobile</td><td>customEvent</td></tr>
+                <tr><td class="mono">188</td><td class="name">event - 1._verifica_fattibilità_-_prodotto_selezionato</td><td>customEvent</td></tr>
+                <tr><td class="mono">189</td><td class="name">event - 3._verifica_fattibilità_open_-_reddito</td><td>customEvent</td></tr>
+                <tr><td class="mono">190</td><td class="name">event - verifica_fattibilità_-_blocco_anagrafica</td><td>customEvent</td></tr>
+                <tr><td class="mono">191</td><td class="name">event - 7_-_avanzamento_ricerca</td><td>customEvent</td></tr>
+                <tr><td class="mono">192</td><td class="name">event - 8_-_comune_immobile</td><td>customEvent</td></tr>
+                <tr><td class="mono">193</td><td class="name">event - 9_-_approfondimento_idoneità</td><td>customEvent</td></tr>
+                <tr><td class="mono">194</td><td class="name">event - 4_-_tasso</td><td>customEvent</td></tr>
+                <tr><td class="mono">195</td><td class="name">event - verifica_fattibilità_open</td><td>customEvent</td></tr>
+                <tr><td class="mono">196</td><td class="name">event - 3._verifica_fattibilità_-_reddito</td><td>customEvent</td></tr>
+                <tr><td class="mono">197</td><td class="name">event - 1_-_importo_mutuo</td><td>customEvent</td></tr>
+                <tr><td class="mono">198</td><td class="name">event - 5_-_durata</td><td>customEvent</td></tr>
+                <tr><td class="mono">199</td><td class="name">event - 6_-_finalità</td><td>customEvent</td></tr>
+                <tr><td class="mono">200</td><td class="name">event - 10_-_offerta_consulenza</td><td>customEvent</td></tr>
+                <tr><td class="mono">201</td><td class="name">event - 11_-_visualizzazione_consulenza</td><td>customEvent</td></tr>
+                <tr><td class="mono">202</td><td class="name">event - 2._verifica_fattibilità_open_-_intestatari</td><td>customEvent</td></tr>
+                <tr><td class="mono">203</td><td class="name">event - 3_-_età</td><td>customEvent</td></tr>
+                <tr><td class="mono">204</td><td class="name">event - 4._verifica_fattibilità_open_-_provenienza_redditi</td><td>customEvent</td></tr>
+                <tr><td class="mono">205</td><td class="name">event - 2._verifica_fattibilità_-_intestatari</td><td>customEvent</td></tr>
+                <tr><td class="mono">206</td><td class="name">event - 5._verifica_fattibilità_open_-_form_lead</td><td>customEvent</td></tr>
+                <tr><td class="mono">207</td><td class="name">event - 12_-_offerta_verifica_fattibilità_open</td><td>customEvent</td></tr>
+                <tr><td class="mono">208</td><td class="name">event - 4._verifica_fattibilità_-_provenienza_redditi</td><td>customEvent</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="alert alert-warn" style="margin-top:12px">
+            <div class="alert-icon">⚠</div>
+            <div>
+              <div class="alert-title">Trigger duplicato rilevato</div>
+              <div class="alert-body">Il trigger <strong>"Copy of trigger abbandono-flusso"</strong> (id: 292, tipo historyChange) sembra essere un duplicato del trigger <strong>"trigger abbandono-flusso"</strong> (id: 281, tipo customEvent). Verificare se entrambi sono necessari o se uno è un residuo.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIABLES -->
+        <div id="prod-variables" class="tab-content">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">128</td><td class="name">GA4-ID</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">52</td><td class="name">facebook - pixel id</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">272</td><td class="name">tiktok - pixel id</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">145</td><td class="name">GA4 - Event settings</td><td>Google Tag Event Settings (gtes)</td></tr>
+                <tr><td class="mono">55</td><td class="name">event ID</td><td>Custom JS</td></tr>
+                <tr><td class="mono">96</td><td class="name">cookiebot - cookieValue</td><td>Cookie (k)</td></tr>
+                <tr><td class="mono">279</td><td class="name">cookie - richiesta-inviata</td><td>Cookie (k)</td></tr>
+                <tr><td class="mono">280</td><td class="name">cookie - finalita-altro</td><td>Cookie (k)</td></tr>
+                <tr><td class="mono">97</td><td class="name">cookiebot - ValueConsentPreferences</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">98</td><td class="name">cookiebot - ad_storage - gcm forced</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">99</td><td class="name">cookiebot - preferences - gcm forced</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">106</td><td class="name">cookiebot - analytics_storage - gcm forced</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">109</td><td class="name">cookiebot - ValueConsentMarketing</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">111</td><td class="name">cookiebot - ValueConsentStatistics</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">117</td><td class="name">cjs - possible bot</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">118</td><td class="name">user - possible_bot</td><td>Smm (lookup)</td></tr>
+                <tr><td class="mono">119</td><td class="name">user - traffic_type</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">126</td><td class="name">cjs - GA session id</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">130</td><td class="name">page - queryURLToExclude</td><td>Custom (cvt)</td></tr>
+                <tr><td class="mono">131</td><td class="name">cjs - GA cookie id</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">136</td><td class="name">cjs - adblocker_check</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">154</td><td class="name">Click URL - No Protocol Tel-Mail</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">155</td><td class="name">Click Protocol</td><td>Auto Event (aev)</td></tr>
+                <tr><td class="mono">236</td><td class="name">Click Text Lowercase</td><td>Auto Event (aev)</td></tr>
+                <tr><td class="mono">44</td><td class="name">dlv - eventProps.lead_phone</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">45</td><td class="name">dlv - eventProps.lead_email</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">46</td><td class="name">upd - email/phone form</td><td>AWEC</td></tr>
+                <tr><td class="mono">62</td><td class="name">dlv - eventModel.form_destination</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">146</td><td class="name">dlv - eventProps.citta</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">147</td><td class="name">dlv - eventProps.lead_req_id</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">163</td><td class="name">DLV - webVitalsMeasurement.name</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">164</td><td class="name">DLV - webVitalsMeasurement.debugTarget</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">166</td><td class="name">DLV - webVitalsMeasurement.value</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">167</td><td class="name">DLV - webVitalsMeasurement.rating</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">172</td><td class="name">cjs - form funnel name GA4</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">177</td><td class="name">dlv - eventProps.current_step</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">178</td><td class="name">dlv - eventProps.answer</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">179</td><td class="name">dlv - eventProps.regione</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">180</td><td class="name">dlv - eventProps.provincia</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">182</td><td class="name">dlv - eventProps.user_req_id</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">183</td><td class="name">dlv - eventProps.token</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">209</td><td class="name">cjs - form funnel id GA4</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">210</td><td class="name">dlv - eventProps.type</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">212</td><td class="name">cjs - form funnel id - no space</td><td>Custom JS (jsm)</td></tr>
+                <tr><td class="mono">220</td><td class="name">dlv - gtm.newUrl</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">228</td><td class="name">dlv - vwo_exp_variant_string</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">263</td><td class="name">dlv - results_number</td><td>DL Variable (v)</td></tr>
+                <tr><td class="mono">264</td><td class="name">regex table - results_number</td><td>Custom JS (jsm)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- VERSIONS -->
+        <div id="prod-versions" class="tab-content">
+          <p style="color:var(--grey);font-size:12px;margin-bottom:16px">76 versioni totali. Versione live: <strong>v76</strong>. Prima versione significativa: <strong>v2 — GA4 Implementazione</strong>.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Versione</th><th>Nome</th><th>Tag</th><th>Trigger</th><th>Variabili</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">v2</td><td>GA4 - Implementazione</td><td>1</td><td>—</td><td>—</td></tr>
+                <tr><td class="mono">v26</td><td>Setting GADS Browser + Server Side con Data Tag</td><td>42</td><td>13</td><td>10</td></tr>
+                <tr><td class="mono">v29</td><td>MOCA - review</td><td>41</td><td>21</td><td>26</td></tr>
+                <tr><td class="mono">v33</td><td>MOCA - Consent Mode v2</td><td>41</td><td>22</td><td>26</td></tr>
+                <tr><td class="mono">v34</td><td>MOCA - CWV</td><td>43</td><td>23</td><td>30</td></tr>
+                <tr><td class="mono">v40</td><td>MOCA - VWO</td><td>56</td><td>54</td><td>42</td></tr>
+                <tr><td class="mono">v67</td><td>MOCA</td><td>69</td><td>64</td><td>48</td></tr>
+                <tr style="background:#FFF5F5"><td class="mono" style="color:var(--red);font-weight:700">v76</td><td><strong>MOCA — Live</strong></td><td>71</td><td>67</td><td>48</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- fine container produzione -->
+
+      <!-- CONTAINER SERVER -->
+      <div class="container-card">
+        <div class="container-header">
+          <div>
+            <div class="container-name">TassoMutuo.it Server</div>
+            <div class="container-meta">
+              <span class="badge badge-server">Server-Side</span>
+              <span class="badge badge-active">Attivo</span>
+            </div>
+          </div>
+          <div class="container-id">GTM-TBP9CXC</div>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi-box kpi-tags"><div class="kpi-n">25</div><div class="kpi-l">Tag</div></div>
+          <div class="kpi-box kpi-triggers"><div class="kpi-n">24</div><div class="kpi-l">Trigger</div></div>
+          <div class="kpi-box kpi-variables"><div class="kpi-n">51</div><div class="kpi-l">Variabili</div></div>
+          <div class="kpi-box kpi-versions"><div class="kpi-n">62</div><div class="kpi-l">Versioni</div></div>
+        </div>
+
+        <div class="section-title">Workspace</div>
+        <div class="workspace-row">
+          <div class="workspace-badge">Default Workspace (id: 69)</div>
+        </div>
+
+        <div class="section-title">Folder organizzative</div>
+        <div class="folder-grid" style="margin-bottom:20px">
+          <span class="folder-chip">GA4</span>
+          <span class="folder-chip">Facebook</span>
+          <span class="folder-chip">Google ADS</span>
+          <span class="folder-chip">Utilities</span>
+          <span class="folder-chip">TikTok</span>
+          <span class="folder-chip">Test GA4</span>
+        </div>
+
+        <!-- TABS SERVER -->
+        <div class="tabs" id="tabs-server">
+          <button class="tab active" onclick="switchTab('server','tags')">Tag (25)</button>
+          <button class="tab" onclick="switchTab('server','triggers')">Trigger (24)</button>
+          <button class="tab" onclick="switchTab('server','variables')">Variabili (51)</button>
+          <button class="tab" onclick="switchTab('server','versions')">Versioni (62)</button>
+        </div>
+
+        <div id="server-tags" class="tab-content active">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th><th>Stato</th><th>Firing Trigger</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">76</td><td class="name">GA4</td><td>sgtmgaaw</td><td><span class="status-dot dot-active"></span>Attivo</td><td>All Events - Client GA4 (blocking: NO Cookiebot)</td></tr>
+                <tr><td class="mono">158</td><td class="name">GA4 - Offline events</td><td>sgtmgaaw</td><td><span class="status-dot dot-active"></span>Attivo</td><td>GA4 - Offline Conversion Events</td></tr>
+                <tr><td class="mono">153</td><td class="name">GA4 - test property</td><td>sgtmgaaw</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>GA4 - test prop events</td></tr>
+                <tr><td class="mono">175</td><td class="name">GA4 - Test - Offline events</td><td>sgtmgaaw</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>GA4 - test Offline</td></tr>
+                <tr><td class="mono">100</td><td class="name">Facebook - Conversion API events</td><td>cvt_5TP8W</td><td><span class="status-dot dot-active"></span>Attivo</td><td>FB - Conversion Events</td></tr>
+                <tr><td class="mono">128</td><td class="name">Facebook - Offline Conversion API events</td><td>cvt_5TP8W</td><td><span class="status-dot dot-active"></span>Attivo</td><td>FB - Offline Conversion Events</td></tr>
+                <tr><td class="mono">145</td><td class="name">Facebook - Offline CAPI - HubSpot - Opportunità presa in carico</td><td>cvt_5TP8W</td><td><span class="status-dot dot-active"></span>Attivo</td><td>FB - Offline - HubSpot - Opportunità presa in carico</td></tr>
+                <tr><td class="mono">150</td><td class="name">Facebook - Offline CAPI - HubSpot - Purchase</td><td>cvt_5TP8W</td><td><span class="status-dot dot-active"></span>Attivo</td><td>FB - Offline - HubSpot - Purchase</td></tr>
+                <tr><td class="mono">192</td><td class="name">Facebook - Conversion API - Purchase (lead)</td><td>cvt_5TP8W</td><td><span class="status-dot dot-active"></span>Attivo</td><td>FB - Conversion Events - purchase (lead)</td></tr>
+                <tr><td class="mono">194</td><td class="name">Facebook - Offline CAPI - Lead + App. da confermare</td><td>cvt_5TP8W</td><td><span class="status-dot dot-active"></span>Attivo</td><td>FB - Offline - Lead + App. da confermare</td></tr>
+                <tr><td class="mono">108</td><td class="name">GAds - calcola_rata</td><td>sgtmadsct</td><td><span class="status-dot dot-active"></span>Attivo</td><td>gads - calcola_rata</td></tr>
+                <tr><td class="mono">106</td><td class="name">GAds - flow_start</td><td>sgtmadsct</td><td><span class="status-dot dot-active"></span>Attivo</td><td>gads - flow_start</td></tr>
+                <tr><td class="mono">107</td><td class="name">GAds - visualizzazione_consulenza</td><td>sgtmadsct</td><td><span class="status-dot dot-active"></span>Attivo</td><td>gads - visualizzazione_consulenza</td></tr>
+                <tr><td class="mono">109</td><td class="name">GAds - ottieni_mutuo</td><td>sgtmadsct</td><td><span class="status-dot dot-active"></span>Attivo</td><td>gads - ottieni_mutuo</td></tr>
+                <tr><td class="mono">90</td><td class="name">GAds - richiesta_inviata</td><td>sgtmadsct</td><td><span class="status-dot dot-active"></span>Attivo</td><td>gads - richiesta_inviata</td></tr>
+                <tr><td class="mono">88</td><td class="name">GAds - remarketing</td><td>sgtmadsremarket</td><td><span class="status-dot dot-active"></span>Attivo</td><td>gads - page_view</td></tr>
+                <tr><td class="mono">217</td><td class="name">GADS - Offline - Contattare cliente</td><td>cvt_PJ56L</td><td><span class="status-dot dot-active"></span>Attivo</td><td>GADS - Offline - HubSpot - Contattare cliente</td></tr>
+                <tr><td class="mono">220</td><td class="name">GADS - Offline - In sviluppo</td><td>cvt_PJ56L</td><td><span class="status-dot dot-active"></span>Attivo</td><td>GADS - Offline - HubSpot - In sviluppo</td></tr>
+                <tr><td class="mono">221</td><td class="name">GADS - Offline - Appuntamento da confermare</td><td>cvt_PJ56L</td><td><span class="status-dot dot-active"></span>Attivo</td><td>GADS - Offline - HubSpot - App. da confermare</td></tr>
+                <tr><td class="mono">84</td><td class="name">Utilities - Conversion Linker</td><td>sgtmadscl</td><td><span class="status-dot dot-active"></span>Attivo</td><td>All Events</td></tr>
+                <tr><td class="mono">83</td><td class="name">Utilities - Cookie Monster</td><td>cvt_132720584_53</td><td><span class="status-dot dot-active"></span>Attivo</td><td>All Events</td></tr>
+                <tr><td class="mono">173</td><td class="name">Utilities - Cookie Monster - exp_variant</td><td>cvt_132720584_53</td><td><span class="status-dot dot-active"></span>Attivo</td><td>GA4 - test cookie</td></tr>
+                <tr><td class="mono">204</td><td class="name">TikTok - Conversion API events</td><td>cvt_K8M24</td><td><span class="status-dot dot-active"></span>Attivo</td><td>tiktok - Conversion Events</td></tr>
+                <tr><td class="mono">207</td><td class="name">TikTok - Offline Conversion API events</td><td>cvt_K8M24</td><td><span class="status-dot dot-active"></span>Attivo</td><td>Tiktok - Offline Conversion Events</td></tr>
+                <tr><td class="mono">148</td><td class="name">Stape Writer</td><td>cvt_132720584_146</td><td><span class="status-dot dot-paused"></span>In pausa</td><td>FB - Offline Conversion Events</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="server-triggers" class="tab-content">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">3</td><td class="name">All Events</td><td>always</td></tr>
+                <tr><td class="mono">74</td><td class="name">NO - Cookiebot crawler</td><td>always</td></tr>
+                <tr><td class="mono">75</td><td class="name">All Events - Client GA4</td><td>always</td></tr>
+                <tr><td class="mono">71</td><td class="name">FB - Conversion Events</td><td>always</td></tr>
+                <tr><td class="mono">127</td><td class="name">FB - Offline Conversion Events</td><td>always</td></tr>
+                <tr><td class="mono">144</td><td class="name">FB - Offline - HubSpot - Opportunità presa in carico</td><td>always</td></tr>
+                <tr><td class="mono">149</td><td class="name">FB - Offline - HubSpot - Purchase</td><td>always</td></tr>
+                <tr><td class="mono">191</td><td class="name">FB - Conversion Events - purchase (lead)</td><td>always</td></tr>
+                <tr><td class="mono">193</td><td class="name">FB - Offline - Lead + App. da confermare</td><td>always</td></tr>
+                <tr><td class="mono">6</td><td class="name">gads - visualizzazione_consulenza</td><td>always</td></tr>
+                <tr><td class="mono">7</td><td class="name">gads - flow_start</td><td>always</td></tr>
+                <tr><td class="mono">13</td><td class="name">gads - calcola_rata</td><td>always</td></tr>
+                <tr><td class="mono">15</td><td class="name">gads - ottieni_mutuo</td><td>always</td></tr>
+                <tr><td class="mono">77</td><td class="name">gads - richiesta_inviata</td><td>always</td></tr>
+                <tr><td class="mono">87</td><td class="name">gads - page_view</td><td>always</td></tr>
+                <tr><td class="mono">163</td><td class="name">GA4 - Offline Conversion Events</td><td>always</td></tr>
+                <tr><td class="mono">159</td><td class="name">GA4 - test prop events</td><td>always</td></tr>
+                <tr><td class="mono">172</td><td class="name">GA4 - test cookie</td><td>always</td></tr>
+                <tr><td class="mono">183</td><td class="name">GA4 - test Offline</td><td>always</td></tr>
+                <tr><td class="mono">203</td><td class="name">tiktok - Conversion Events</td><td>always</td></tr>
+                <tr><td class="mono">206</td><td class="name">Tiktok - Offline Conversion Events</td><td>always</td></tr>
+                <tr><td class="mono">212</td><td class="name">GADS - Offline - HubSpot - Contattare cliente</td><td>always</td></tr>
+                <tr><td class="mono">222</td><td class="name">GADS - Offline - HubSpot - App. da confermare</td><td>always</td></tr>
+                <tr><td class="mono">223</td><td class="name">GADS - Offline - HubSpot - In sviluppo</td><td>always</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="server-variables" class="tab-content">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Nome</th><th>Tipo</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">94</td><td class="name">GA4-ID</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">95</td><td class="name">GTM-ID</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">22</td><td class="name">facebook - api token</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">23</td><td class="name">facebook - pixel id</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">103</td><td class="name">google ads - conversion id</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">197</td><td class="name">tiktok - api token</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">198</td><td class="name">tiktok - pixel id</td><td>Constant (c)</td></tr>
+                <tr><td class="mono">96</td><td class="name">Client Name</td><td>Client Name (cn)</td></tr>
+                <tr><td class="mono">47</td><td class="name">gcs</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">52</td><td class="name">event data - ip_override</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">54</td><td class="name">event data - event_location.country</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">78</td><td class="name">event data - client_id</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">79</td><td class="name">page_location</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">115</td><td class="name">event data - hashed form_email</td><td>Custom (cvt)</td></tr>
+                <tr><td class="mono">116</td><td class="name">event data - hashed form_phone</td><td>Custom (cvt)</td></tr>
+                <tr><td class="mono">92</td><td class="name">event data - hashed external_id</td><td>Custom (cvt)</td></tr>
+                <tr><td class="mono">40</td><td class="name">event data - form_phone</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">43</td><td class="name">event data - form_email</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">46</td><td class="name">FB cookie - _fbp</td><td>Server Cookie (sgtmk)</td></tr>
+                <tr><td class="mono">82</td><td class="name">FB cookie - _fbc</td><td>Server Cookie (sgtmk)</td></tr>
+                <tr><td class="mono">138</td><td class="name">event data - _fbp</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">139</td><td class="name">event data - _fbc</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">70</td><td class="name">event data - lead_id</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">114</td><td class="name">event timestamp</td><td>Custom (cvt)</td></tr>
+                <tr><td class="mono">125</td><td class="name">event data - CookieConsent</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">126</td><td class="name">cookie - CookieConsent</td><td>Regex (remm)</td></tr>
+                <tr><td class="mono">129</td><td class="name">event data - value</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">137</td><td class="name">event data - FPGCLAW</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">154</td><td class="name">event data - ga_session_id</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">157</td><td class="name">event data - _ucid</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">162</td><td class="name">event data - leadId</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">165</td><td class="name">event data - step_name</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">170</td><td class="name">event data - vwo_exp_variant_string</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">171</td><td class="name">event data - all_cookies._exp_variant</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">174</td><td class="name">ga4 - offline event name</td><td>Lookup (smm)</td></tr>
+                <tr><td class="mono">180</td><td class="name">event data - _usid</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">189</td><td class="name">extract gclid</td><td>Custom (cvt)</td></tr>
+                <tr><td class="mono">199</td><td class="name">tiktok cookie - _ttclid</td><td>Server Cookie (sgtmk)</td></tr>
+                <tr><td class="mono">200</td><td class="name">event data - _ttclid</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">201</td><td class="name">tiktok cookie - _ttp</td><td>Server Cookie (sgtmk)</td></tr>
+                <tr><td class="mono">202</td><td class="name">event data - _ttp</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">205</td><td class="name">tiktok - custom events</td><td>Lookup (smm)</td></tr>
+                <tr><td class="mono">18</td><td class="name">event data - user_agent</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">48</td><td class="name">GCM - ads storage</td><td>Lookup (smm)</td></tr>
+                <tr><td class="mono">58</td><td class="name">cookiebot user agent</td><td>Lookup (smm)</td></tr>
+                <tr><td class="mono">99</td><td class="name">facebook - custom events</td><td>Lookup (smm)</td></tr>
+                <tr><td class="mono">218</td><td class="name">event data - all_cookies.gclid</td><td>Event Data (ed)</td></tr>
+                <tr><td class="mono">219</td><td class="name">offline - ads storage</td><td>Lookup (smm)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="server-versions" class="tab-content">
+          <p style="color:var(--grey);font-size:12px;margin-bottom:16px">62 versioni totali. Versione live: <strong>v62</strong>. Prima versione significativa: <strong>v2 — Server Side Tracking</strong>.</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Versione</th><th>Nome</th><th>Tag</th><th>Trigger</th><th>Variabili</th></tr></thead>
+              <tbody>
+                <tr><td class="mono">v2</td><td>Server Side Tracking</td><td>12</td><td>7</td><td>7</td></tr>
+                <tr><td class="mono">v3</td><td>Server Side con Data Tag</td><td>6</td><td>7</td><td>16</td></tr>
+                <tr><td class="mono">v10</td><td>MOCA - CAPI offline</td><td>12</td><td>12</td><td>32</td></tr>
+                <tr><td class="mono">v26</td><td>MOCA</td><td>16</td><td>15</td><td>41</td></tr>
+                <tr><td class="mono">v54</td><td>MOCA</td><td>21</td><td>20</td><td>45</td></tr>
+                <tr style="background:#FFF5F5"><td class="mono" style="color:var(--red);font-weight:700">v62</td><td><strong>Live</strong></td><td>25</td><td>24</td><td>48</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div><!-- fine container server -->
+    </div>
+  </div><!-- fine account 3 -->
+
+  <!-- OSSERVAZIONI FINALI -->
+  <div class="section-title">Osservazioni e raccomandazioni</div>
+  <div style="background:var(--white);border-radius:8px;padding:24px 28px;border-left:4px solid var(--red);">
+    <div class="observations">
+      <div class="obs-item">
+        <div class="obs-num">01</div>
+        <div class="obs-text"><strong>Dismettere o documentare gli account vuoti.</strong> Gli account GTM 6080855706 e 6266506288 contengono container senza tag pubblicati (4 versioni e 1 versione rispettivamente). Probabilmente erano destinati a configurazioni native di Google Ads e GA4 poi confluite nel container principale. Verificare se i tag ID associati (AW-11093796799, G-VLWGDJ3VZN) sono ancora attivi a livello di account Google e, in caso, decidere se dismettere i container o documentarne lo scopo.</div>
+      </div>
+      <div class="obs-item">
+        <div class="obs-num">02</div>
+        <div class="obs-text"><strong>Pulire i tag Google Ads in pausa nel container web.</strong> I 9 tag GADS in pausa (Conversion Linker, ottieni_mutuo, StartFlow, Lead Inviata, calcola_rata, Visualizzazione_Consulenza, Remarketing, User Data Global, learning display, Visualizzazione-rata, Visualizzazione Contattaci) occupano spazio nel container e possono generare confusione. Se il tracking GAds è interamente migrato al server-side, questi tag possono essere eliminati.</div>
+      </div>
+      <div class="obs-item">
+        <div class="obs-num">03</div>
+        <div class="obs-text"><strong>Workspace "Esercitazione formazione" nel container di produzione.</strong> Il workspace secondario (id: 67) nel container GTM-DRHC5QQ potrebbe contenere modifiche non pubblicate risalenti all'attività di formazione. Verificarne il contenuto e, se non necessario, eliminarlo per evitare confusione durante future attività di manutenzione.</div>
+      </div>
+      <div class="obs-item">
+        <div class="obs-num">04</div>
+        <div class="obs-text"><strong>Trigger duplicato "Copy of trigger abbandono-flusso".</strong> Il trigger id 292 (historyChange) sembra un duplicato creato per test del trigger id 281 (customEvent). Verificare se entrambi sono in uso o se il "Copy of" è un residuo da eliminare.</div>
+      </div>
+      <div class="obs-item">
+        <div class="obs-num">05</div>
+        <div class="obs-text"><strong>Tag di test in pausa nel container server.</strong> I tag "GA4 - test property" (id: 153), "GA4 - Test - Offline events" (id: 175) e "Stape Writer" (id: 148) risultano in pausa. Se il collaudo è concluso, valutare l'eliminazione per mantenere il container server pulito.</div>
+      </div>
+      <div class="obs-item">
+        <div class="obs-num">06</div>
+        <div class="obs-text"><strong>Architettura client-server ben strutturata.</strong> L'implementazione con container web (GTM-DRHC5QQ) che invia eventi al container server (GTM-TBP9CXC) per la gestione delle Conversion API di Facebook, Google Ads offline e TikTok è corretta e segue le best practice. Il cookie monster è correttamente in posizione server-side, così come l'hashing dei dati PII (email, telefono, external_id).</div>
+      </div>
+      <div class="obs-item">
+        <div class="obs-num">07</div>
+        <div class="obs-text"><strong>Consent Mode v2 implementato correttamente.</strong> Il container web gestisce il consenso tramite Cookiebot con tag Default e Update di Google Consent Mode v2. Le blocking condition sui trigger Facebook, Google Ads e Hotjar sono presenti e coerenti. Il container server integra il segnale di consenso attraverso la variabile "cookie - CookieConsent" e il filtro "cookiebot user agent".</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- fine wrapper -->
+
+<div class="footer">
+  <img src="https://mocainteractive.com/assets/svg/logo-light.svg" alt="MOCA Interactive">
+  GTM Audit — TassoMutuo &nbsp;|&nbsp; MOCA Interactive &nbsp;|&nbsp; Aprile 2026 &nbsp;|&nbsp; Documento riservato
+</div>
+
+<script>
+function switchTab(container, tab) {
+  // Deactivate all tabs and content for this container
+  const allTabs = document.querySelectorAll(`#tabs-${container} .tab`);
+  allTabs.forEach(t => t.classList.remove('active'));
+  
+  const allContents = document.querySelectorAll(`[id^="${container}-"]`);
+  allContents.forEach(c => c.classList.remove('active'));
+  
+  // Activate selected
+  document.getElementById(`${container}-${tab}`).classList.add('active');
+  
+  // Find and activate the clicked tab button
+  allTabs.forEach(t => {
+    if (t.getAttribute('onclick').includes(`'${tab}'`)) {
+      t.classList.add('active');
+    }
+  });
+}
+</script>
+</body>
+</html>

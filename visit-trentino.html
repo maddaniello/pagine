@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GTM Audit — GTM-K229LH8W | visittrentino.info</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E52217;
+    --red-light: #FF5147;
+    --red-pale: #FFE7E6;
+    --dark: #191919;
+    --white: #FFFFFF;
+    --grey-light: #F4F5F6;
+    --grey-mid: #E0E2E5;
+    --grey-text: #595959;
+    --grey-label: #888;
+    --green: #118541;
+    --blue: #5781FF;
+    --violet: #551FC4;
+    --orange: #DB5E29;
+    --yellow: #F4A61A;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    color: var(--grey-text);
+    background: var(--grey-light);
+    line-height: 1.6;
+  }
+
+  /* PRINT */
+  @media print {
+    .sidebar { display: none !important; }
+    .main-content { margin-left: 0 !important; }
+    .no-print { display: none !important; }
+    body { background: white; }
+    .section-card { break-inside: avoid; }
+  }
+
+  /* LAYOUT */
+  .layout { display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: 220px;
+    min-height: 100vh;
+    background: var(--dark);
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .sidebar-logo img { height: 24px; }
+  .sidebar-nav { padding: 16px 0; flex: 1; }
+  .nav-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    padding: 12px 20px 6px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 20px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.15s;
+    cursor: pointer;
+  }
+  .nav-item:hover, .nav-item.active {
+    color: white;
+    background: rgba(255,255,255,0.06);
+  }
+  .nav-item .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    flex-shrink: 0;
+  }
+  .nav-item.active .dot { background: var(--red); }
+  .nav-badge {
+    margin-left: auto;
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.5);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 10px;
+  }
+  .nav-badge.red { background: rgba(229,34,23,0.25); color: var(--red-light); }
+  .nav-badge.orange { background: rgba(219,94,41,0.25); color: #f07a44; }
+  .sidebar-footer {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 10px;
+    color: rgba(255,255,255,0.25);
+  }
+
+  /* MAIN CONTENT */
+  .main-content {
+    margin-left: 220px;
+    flex: 1;
+    padding: 0;
+  }
+
+  /* TOPBAR */
+  .topbar {
+    background: var(--dark);
+    color: white;
+    padding: 32px 40px 28px;
+    border-bottom: 3px solid var(--red);
+  }
+  .topbar-meta {
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .topbar-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+  }
+  .topbar-title span { color: var(--red); }
+  .topbar-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 400;
+  }
+  .topbar-right {
+    margin-top: 20px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .badge-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 6px;
+    padding: 6px 12px;
+  }
+  .badge-icon { font-size: 13px; }
+  .badge-text { font-size: 11px; color: rgba(255,255,255,0.7); font-weight: 500; }
+  .badge-text strong { color: white; }
+
+  /* PAGE BODY */
+  .page-body { padding: 32px 40px; }
+
+  /* SECTION */
+  .section-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+  .section-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--grey-mid);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--dark);
+  }
+  .section-count {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--grey-label);
+    background: var(--grey-light);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .section-body { padding: 20px 24px; }
+
+  /* KPI GRID */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: white;
+    border-radius: 10px;
+    padding: 20px 20px 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border-top: 3px solid transparent;
+  }
+  .kpi-card.red { border-top-color: var(--red); }
+  .kpi-card.green { border-top-color: var(--green); }
+  .kpi-card.blue { border-top-color: var(--blue); }
+  .kpi-card.orange { border-top-color: var(--orange); }
+  .kpi-card.violet { border-top-color: var(--violet); }
+  .kpi-card.dark { border-top-color: var(--dark); }
+  .kpi-card.grey { border-top-color: #888; }
+  .kpi-number {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--dark);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .kpi-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--grey-label);
+    margin-bottom: 6px;
+  }
+  .kpi-sub {
+    font-size: 10px;
+    color: var(--grey-label);
+  }
+  .kpi-sub strong { color: var(--grey-text); }
+
+  /* FINDINGS */
+  .findings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 900px) { .findings-grid { grid-template-columns: 1fr; } }
+  .finding-item {
+    border-radius: 8px;
+    padding: 14px 16px;
+    border-left: 4px solid transparent;
+    background: var(--grey-light);
+  }
+  .finding-item.critical { border-left-color: var(--red); background: var(--red-pale); }
+  .finding-item.warning { border-left-color: var(--orange); background: #fff5f0; }
+  .finding-item.info { border-left-color: var(--blue); background: #f0f4ff; }
+  .finding-item.positive { border-left-color: var(--green); background: #f0faf4; }
+  .finding-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
+  .finding-badge {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px 8px;
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .finding-badge.critical { background: var(--red); color: white; }
+  .finding-badge.warning { background: var(--orange); color: white; }
+  .finding-badge.info { background: var(--blue); color: white; }
+  .finding-badge.positive { background: var(--green); color: white; }
+  .finding-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.3;
+  }
+  .finding-desc {
+    font-size: 11px;
+    color: var(--grey-text);
+    line-height: 1.5;
+    margin-top: 4px;
+  }
+  .finding-desc code {
+    background: rgba(0,0,0,0.06);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 10px;
+  }
+
+  /* TABLE */
+  .audit-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 11px;
+  }
+  .audit-table thead tr {
+    background: var(--grey-light);
+    border-bottom: 2px solid var(--grey-mid);
+  }
+  .audit-table th {
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--grey-label);
+  }
+  .audit-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--grey-mid);
+    vertical-align: top;
+  }
+  .audit-table tbody tr:hover { background: #fafafa; }
+  .audit-table tbody tr:last-child td { border-bottom: none; }
+
+  /* STATUS BADGES */
+  .status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .status-badge.active { background: #e8f7ed; color: #0d6e38; }
+  .status-badge.paused { background: #f0f0f0; color: #888; }
+  .status-badge.warning { background: #fff3e8; color: #c05a1a; }
+
+  /* TYPE BADGES */
+  .type-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 9px;
+    font-weight: 600;
+    background: var(--grey-light);
+    color: var(--grey-text);
+    font-family: 'Courier New', monospace;
+  }
+  .type-badge.ga4 { background: #e8f0ff; color: #2a5ed4; }
+  .type-badge.fb { background: #e8f0fe; color: #1450b8; }
+  .type-badge.tiktok { background: #f0e8ff; color: #6d28d9; }
+  .type-badge.ads { background: #fff8e8; color: #b45309; }
+  .type-badge.html { background: #fef0e8; color: #c2420f; }
+  .type-badge.consent { background: #e8fef2; color: #047857; }
+  .type-badge.other { background: #f0f0f0; color: #555; }
+
+  /* CHARTS */
+  .chart-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .chart-donut-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  .donut-chart {
+    width: 120px; height: 120px;
+    position: relative;
+  }
+  .donut-chart svg { transform: rotate(-90deg); }
+  .donut-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+  }
+  .donut-center .num { font-size: 22px; font-weight: 800; color: var(--dark); line-height: 1; }
+  .donut-center .lbl { font-size: 9px; font-weight: 600; color: var(--grey-label); text-transform: uppercase; }
+
+  .legend-list { list-style: none; display: flex; flex-direction: column; gap: 4px; justify-content: center; }
+  .legend-list li {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 11px;
+    color: var(--grey-text);
+  }
+  .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+  /* HORIZONTAL BAR */
+  .hbar-list { display: flex; flex-direction: column; gap: 8px; }
+  .hbar-item { }
+  .hbar-head { display: flex; justify-content: space-between; margin-bottom: 3px; }
+  .hbar-label { font-size: 11px; color: var(--grey-text); font-weight: 500; }
+  .hbar-val { font-size: 11px; font-weight: 700; color: var(--dark); }
+  .hbar-track { height: 6px; background: var(--grey-mid); border-radius: 3px; overflow: hidden; }
+  .hbar-fill { height: 100%; border-radius: 3px; }
+
+  /* TWO COL LAYOUT */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+  @media (max-width: 800px) { .two-col { grid-template-columns: 1fr; } }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+  @media (max-width: 900px) { .three-col { grid-template-columns: 1fr; } }
+
+  /* TAG FILTER */
+  .filter-bar {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .filter-btn {
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--grey-mid);
+    background: white;
+    font-size: 10px;
+    font-weight: 600;
+    font-family: 'Figtree', sans-serif;
+    cursor: pointer;
+    color: var(--grey-text);
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .filter-btn:hover { background: var(--grey-light); }
+  .filter-btn.active { background: var(--dark); color: white; border-color: var(--dark); }
+  .filter-btn.active-red { background: var(--red); color: white; border-color: var(--red); }
+
+  /* SCROLL TABLE */
+  .table-scroll { overflow-x: auto; }
+
+  /* SECTION ANCHOR */
+  .section-anchor { scroll-margin-top: 20px; }
+
+  /* SEARCH */
+  .search-input {
+    width: 100%;
+    padding: 8px 14px;
+    border: 1px solid var(--grey-mid);
+    border-radius: 6px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 12px;
+    color: var(--dark);
+    margin-bottom: 12px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search-input:focus { border-color: var(--red); }
+
+  /* TAG ID */
+  .tag-id {
+    font-size: 10px;
+    color: var(--grey-label);
+    font-family: 'Courier New', monospace;
+  }
+  .tag-name { font-weight: 600; color: var(--dark); font-size: 11px; }
+
+  /* PIE SECTION */
+  .pie-wrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+
+  /* HIGHLIGHT */
+  .highlight-box {
+    background: var(--red-pale);
+    border: 1px solid rgba(229,34,23,0.15);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+  }
+  .highlight-box .hl-title { font-weight: 700; color: var(--red); font-size: 12px; margin-bottom: 4px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.05em; }
+  .highlight-box .hl-text { font-size: 11px; color: var(--grey-text); }
+
+  /* FOLDER GRID */
+  .folder-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+  .folder-card {
+    background: var(--grey-light);
+    border-radius: 8px;
+    padding: 12px 14px;
+    border: 1px solid var(--grey-mid);
+  }
+  .folder-card .folder-name { font-weight: 700; color: var(--dark); font-size: 12px; margin-bottom: 2px; }
+  .folder-card .folder-id { font-size: 10px; color: var(--grey-label); font-family: monospace; }
+
+  /* VAR TYPE */
+  .var-type {
+    display: inline-block;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-size: 9px;
+    font-weight: 700;
+    font-family: monospace;
+    background: var(--grey-light);
+    color: var(--grey-text);
+    border: 1px solid var(--grey-mid);
+  }
+
+  /* BUILTINS */
+  .builtin-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; }
+  .builtin-tag {
+    background: var(--grey-light);
+    border: 1px solid var(--grey-mid);
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--dark);
+  }
+  .builtin-type { font-size: 9px; color: var(--grey-label); font-family: monospace; }
+
+  /* RECO */
+  .reco-list { display: flex; flex-direction: column; gap: 12px; }
+  .reco-item { display: flex; gap: 14px; align-items: flex-start; }
+  .reco-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--dark);
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .reco-num.red { background: var(--red); }
+  .reco-body .reco-title { font-weight: 700; color: var(--dark); font-size: 12px; margin-bottom: 3px; }
+  .reco-body .reco-text { font-size: 11px; color: var(--grey-text); }
+
+  /* HIDDEN ROW */
+  tr.hidden-row { display: none; }
+
+  /* PLATFORM BREAKDOWN */
+  .platform-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; margin-bottom: 16px; }
+  .platform-card {
+    background: var(--grey-light);
+    border-radius: 8px;
+    padding: 14px 16px;
+    border: 1px solid var(--grey-mid);
+    border-left: 4px solid var(--grey-mid);
+  }
+  .platform-card .p-name { font-weight: 700; color: var(--dark); font-size: 13px; margin-bottom: 2px; }
+  .platform-card .p-detail { font-size: 11px; color: var(--grey-text); }
+  .platform-card .p-status { font-size: 10px; font-weight: 600; margin-top: 6px; }
+  .platform-card.active { border-left-color: var(--green); }
+  .platform-card.partial { border-left-color: var(--orange); }
+  .platform-card.paused-card { border-left-color: #ccc; }
+
+  /* PRINT BTN */
+  .print-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: var(--red);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Figtree', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background 0.15s;
+  }
+  .print-btn:hover { background: #c91d14; }
+
+  /* DIVIDER */
+  .divider { height: 1px; background: var(--grey-mid); margin: 16px 0; }
+
+  .text-muted { color: var(--grey-label); font-size: 11px; }
+  .mt-16 { margin-top: 16px; }
+  .mb-16 { margin-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <img src="https://mocainteractive.com/assets/svg/logo-light.svg" alt="MOCA Interactive">
+  </div>
+  <div class="sidebar-nav">
+    <div class="nav-label">Audit GTM</div>
+    <a href="#overview" class="nav-item active"><span class="dot"></span>Panoramica<span class="nav-badge">113 tag</span></a>
+    <a href="#findings" class="nav-item"><span class="dot"></span>Findings<span class="nav-badge red">8</span></a>
+    <a href="#tags" class="nav-item"><span class="dot"></span>Tag<span class="nav-badge orange">46 in pausa</span></a>
+    <a href="#triggers" class="nav-item"><span class="dot"></span>Trigger<span class="nav-badge">101</span></a>
+    <a href="#variables" class="nav-item"><span class="dot"></span>Variabili<span class="nav-badge">139</span></a>
+    <a href="#folders" class="nav-item"><span class="dot"></span>Folder<span class="nav-badge">14</span></a>
+    <a href="#builtins" class="nav-item"><span class="dot"></span>Var. predefinite<span class="nav-badge">29</span></a>
+    <a href="#platforms" class="nav-item"><span class="dot"></span>Piattaforme</a>
+    <a href="#recommendations" class="nav-item"><span class="dot"></span>Raccomandazioni</a>
+  </div>
+  <div class="sidebar-footer">
+    Audit generato il 16/04/2026<br>
+    MOCA Interactive
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main-content">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-meta">GTM Audit Report · Aprile 2026</div>
+    <div class="topbar-title">GTM-K229LH8W · <span>visittrentino.info</span></div>
+    <div class="topbar-sub">Versione live: #12 "MOCA" · Pubblicazione modifiche post redesign · Default Workspace (ID: 14)</div>
+    <div class="topbar-right">
+      <div class="badge-container"><span class="badge-icon">🏷</span><span class="badge-text"><strong>113</strong> Tag</span></div>
+      <div class="badge-container"><span class="badge-icon">⚡</span><span class="badge-text"><strong>101</strong> Trigger</span></div>
+      <div class="badge-container"><span class="badge-icon">📦</span><span class="badge-text"><strong>139</strong> Variabili</span></div>
+      <div class="badge-container"><span class="badge-icon">📁</span><span class="badge-text"><strong>14</strong> Folder</span></div>
+      <div class="badge-container"><span class="badge-icon">🔧</span><span class="badge-text"><strong>29</strong> Var. predefinite</span></div>
+      <button class="print-btn no-print" onclick="window.print()">&#128438; Stampa / Salva PDF</button>
+    </div>
+  </div>
+
+  <div class="page-body">
+
+  <!-- SECTION: PANORAMICA -->
+  <div id="overview" class="section-anchor"></div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card red">
+      <div class="kpi-label">Tag totali</div>
+      <div class="kpi-number">113</div>
+      <div class="kpi-sub"><strong>67</strong> attivi · <strong>46</strong> in pausa</div>
+    </div>
+    <div class="kpi-card green">
+      <div class="kpi-label">Trigger</div>
+      <div class="kpi-number">101</div>
+      <div class="kpi-sub"><strong>63</strong> custom event · <strong>38</strong> altri tipi</div>
+    </div>
+    <div class="kpi-card blue">
+      <div class="kpi-label">Variabili</div>
+      <div class="kpi-number">139</div>
+      <div class="kpi-sub"><strong>94</strong> Data Layer · <strong>45</strong> altri tipi</div>
+    </div>
+    <div class="kpi-card violet">
+      <div class="kpi-label">Folder</div>
+      <div class="kpi-number">14</div>
+      <div class="kpi-sub">GA4, Facebook, TikTok, Google Ads...</div>
+    </div>
+    <div class="kpi-card dark">
+      <div class="kpi-label">Versione live</div>
+      <div class="kpi-number">12</div>
+      <div class="kpi-sub">Nome: "MOCA" · Post redesign</div>
+    </div>
+    <div class="kpi-card grey">
+      <div class="kpi-label">Tag in pausa</div>
+      <div class="kpi-number">40.7%</div>
+      <div class="kpi-sub">46 tag su 113 non attivi</div>
+    </div>
+  </div>
+
+  <!-- CHART ROW -->
+  <div class="two-col">
+    <!-- Tag breakdown -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">Distribuzione Tag per Tipo</div>
+      </div>
+      <div class="section-body">
+        <div class="hbar-list">
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">GA4 Event (gaawe)</span><span class="hbar-val">58</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:51%;background:#5781FF"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Custom HTML</span><span class="hbar-val">19</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:17%;background:#DB5E29"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Facebook Pixel (template)</span><span class="hbar-val">7</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:6%;background:#1450b8"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Google Tag (googtag)</span><span class="hbar-val">3</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:3%;background:#0d6e38"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Google Ads Smartlist (sp)</span><span class="hbar-val">4</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:4%;background:#F4A61A"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">DataClient / TikTok / Altri</span><span class="hbar-val">22</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:19%;background:#888"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger breakdown -->
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-title">Distribuzione Trigger per Tipo</div>
+      </div>
+      <div class="section-body">
+        <div class="hbar-list">
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Custom Event</span><span class="hbar-val">63</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:62%;background:#5781FF"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">DOM Ready</span><span class="hbar-val">8</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:8%;background:#551FC4"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Pageview</span><span class="hbar-val">8</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:8%;background:#118541"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Click / Link Click</span><span class="hbar-val">16</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:16%;background:#DB5E29"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">History Change</span><span class="hbar-val">2</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:2%;background:#CE2A59"></div></div>
+          </div>
+          <div class="hbar-item">
+            <div class="hbar-head"><span class="hbar-label">Scroll / Timer / YouTube / Form</span><span class="hbar-val">4</span></div>
+            <div class="hbar-track"><div class="hbar-fill" style="width:4%;background:#888"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINDINGS -->
+  <div id="findings" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Findings & Criticità</div>
+      <div class="section-count">8 issues rilevati</div>
+    </div>
+    <div class="section-body">
+      <div class="findings-grid">
+
+        <div class="finding-item critical">
+          <div class="finding-header">
+            <span class="finding-badge critical">Alta priorità</span>
+            <div class="finding-title">Tag senza trigger di attivazione</div>
+          </div>
+          <div class="finding-desc">Il tag <code>#328 – SS FB - Pixel Generale</code> (tipo: gaawe, FB server-side) non ha nessun <code>firingTriggerId</code> definito. Il tag non sparerà mai, neanche se venisse riattivato. Va rimosso o corretto immediatamente.</div>
+        </div>
+
+        <div class="finding-item warning">
+          <div class="finding-header">
+            <span class="finding-badge warning">Media priorità</span>
+            <div class="finding-title">46 tag in pausa (40.7% del totale)</div>
+          </div>
+          <div class="finding-desc">Quasi la metà del container è composta da tag in pausa, perlopiù legacy (GAS FB, wrapper HTML Facebook, SS FB obsoleti, Ogury, Linkappeal, Taboola). Appesantiscono la lettura, aumentano la complessità di manutenzione e rallentano il debug. Andrebbero rimossi o archiviati in una versione separata.</div>
+        </div>
+
+        <div class="finding-item warning">
+          <div class="finding-header">
+            <span class="finding-badge warning">Media priorità</span>
+            <div class="finding-title">Typo nel nome del trigger #290</div>
+          </div>
+          <div class="finding-desc">Il trigger <code>#290</code> si chiama <code>"DOM Rady - form generico tutte lingue"</code> invece di <code>"DOM Ready..."</code>. Errore di battitura che può causare confusione nella lettura e manutenzione del container.</div>
+        </div>
+
+        <div class="finding-item warning">
+          <div class="finding-header">
+            <span class="finding-badge warning">Media priorità</span>
+            <div class="finding-title">Circa 18 trigger potenzialmente orfani</div>
+          </div>
+          <div class="finding-desc">I seguenti trigger non risultano assegnati come firing trigger a nessun tag attivo nel workspace: <code>#18, #42, #44, #48, #91, #95, #98, #133, #159, #287, #299, #305, #314, #321, #363, #518, #523, #573</code>. Potrebbero essere residui di implementazioni precedenti o trigger usati solo come blocking. Vanno verificati e potenzialmente eliminati.</div>
+        </div>
+
+        <div class="finding-item warning">
+          <div class="finding-header">
+            <span class="finding-badge warning">Media priorità</span>
+            <div class="finding-title">Naming convention non omogenea</div>
+          </div>
+          <div class="finding-desc">I nomi di tag, trigger e variabili mescolano italiano e inglese senza una logica consistente (es. <code>"DOM Ready - richiesta prenotazione form struttura"</code> vs <code>"event - request_accommodation"</code>). Questo rende più difficile la ricerca e la manutenzione nel lungo periodo. Suggeriamo di adottare una naming convention unificata.</div>
+        </div>
+
+        <div class="finding-item warning">
+          <div class="finding-header">
+            <span class="finding-badge warning">Media priorità</span>
+            <div class="finding-title">Duplicazione funzionale trigger prenotazione</div>
+          </div>
+          <div class="finding-desc">Esistono due trigger per lo stesso evento di richiesta prenotazione struttura: <code>#9 – DOM Ready - richiesta prenotazione form struttura</code> (domReady) e <code>#481 – event - request_accommodation</code> (customEvent). Il trigger domReady è più fragile e meno preciso del customEvent. Verificare se entrambi sono ancora necessari o se #9 può essere deprecato.</div>
+        </div>
+
+        <div class="finding-item positive">
+          <div class="finding-header">
+            <span class="finding-badge positive">Positivo</span>
+            <div class="finding-title">Google Consent Mode 2 implementato</div>
+          </div>
+          <div class="finding-desc">Il tag <code>#288 – Google Consent Mode 2 - Forced - Update (Iubenda)</code> è attivo e correttamente integrato con il sistema di consenso Iubenda. La struttura dei trigger di consenso (Ads, Analytics, Personalization) è ben organizzata e copre i requisiti GDPR.</div>
+        </div>
+
+        <div class="finding-item positive">
+          <div class="finding-header">
+            <span class="finding-badge positive">Positivo</span>
+            <div class="finding-title">Full funnel EEC GA4 tracciato</div>
+          </div>
+          <div class="finding-desc">Il funnel e-commerce è completamente tracciato con eventi GA4 Enhanced Ecommerce: <code>view_item_list → select_item → view_item → add_to_cart → begin_checkout → add_payment_info → add_shipping_info → view_cart → remove_from_cart → purchase</code>. Ottima copertura per l'analisi del percorso di acquisto.</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- TAGS SECTION -->
+  <div id="tags" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Inventario Tag</div>
+      <div class="section-count">113 tag totali</div>
+    </div>
+    <div class="section-body">
+      <div class="highlight-box">
+        <div class="hl-title">Riepilogo stato</div>
+        <div class="hl-text">67 tag attivi (59.3%) · 46 tag in pausa (40.7%). I tag in pausa includono implementazioni legacy di Facebook (Server-Side, wrapper HTML), Outbrain, Taboola, Ogury, Linkappeal, Quantcast e Google Ads Pageview (sostituito dai Google Tag).</div>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterTags('all', this)">Tutti (113)</button>
+        <button class="filter-btn" onclick="filterTags('active', this)">Attivi (67)</button>
+        <button class="filter-btn active-red" onclick="filterTags('paused', this)">In pausa (46)</button>
+        <button class="filter-btn" onclick="filterTags('ga4', this)">GA4</button>
+        <button class="filter-btn" onclick="filterTags('fb', this)">Facebook</button>
+        <button class="filter-btn" onclick="filterTags('ads', this)">Google Ads</button>
+        <button class="filter-btn" onclick="filterTags('tiktok', this)">TikTok</button>
+        <button class="filter-btn" onclick="filterTags('html', this)">cHTML</button>
+      </div>
+      <input type="text" class="search-input" placeholder="Cerca tag per nome..." oninput="searchTags(this.value)" id="tagSearch">
+
+      <div class="table-scroll">
+        <table class="audit-table" id="tagsTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Stato</th>
+              <th>Trigger attivazione</th>
+              <th>Trigger blocco</th>
+            </tr>
+          </thead>
+          <tbody id="tagsBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRIGGERS SECTION -->
+  <div id="triggers" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Inventario Trigger</div>
+      <div class="section-count">101 trigger</div>
+    </div>
+    <div class="section-body">
+      <input type="text" class="search-input" placeholder="Cerca trigger per nome..." oninput="searchTriggers(this.value)" id="triggerSearch">
+      <div class="table-scroll">
+        <table class="audit-table" id="triggersTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Tipo</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="triggersBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIABLES SECTION -->
+  <div id="variables" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Inventario Variabili</div>
+      <div class="section-count">139 variabili</div>
+    </div>
+    <div class="section-body">
+      <div class="two-col mb-16">
+        <div>
+          <div class="hbar-list">
+            <div class="hbar-item">
+              <div class="hbar-head"><span class="hbar-label">Data Layer Variable (v)</span><span class="hbar-val">94</span></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:68%;background:#5781FF"></div></div>
+            </div>
+            <div class="hbar-item">
+              <div class="hbar-head"><span class="hbar-label">Custom JavaScript (jsm)</span><span class="hbar-val">20</span></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:14%;background:#551FC4"></div></div>
+            </div>
+            <div class="hbar-item">
+              <div class="hbar-head"><span class="hbar-label">Lookup Table (remm)</span><span class="hbar-val">6</span></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:4%;background:#DB5E29"></div></div>
+            </div>
+            <div class="hbar-item">
+              <div class="hbar-head"><span class="hbar-label">Constant (c)</span><span class="hbar-val">5</span></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:4%;background:#118541"></div></div>
+            </div>
+            <div class="hbar-item">
+              <div class="hbar-head"><span class="hbar-label">Event Settings (gtes)</span><span class="hbar-val">2</span></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:2%;background:#CE2A59"></div></div>
+            </div>
+            <div class="hbar-item">
+              <div class="hbar-head"><span class="hbar-label">Altri (k, dbg, u, aev, smm, cvt)</span><span class="hbar-val">12</span></div>
+              <div class="hbar-track"><div class="hbar-fill" style="width:8%;background:#888"></div></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="finding-item info" style="height:100%">
+            <div class="finding-header">
+              <span class="finding-badge info">Nota</span>
+              <div class="finding-title">Naming convention variabili</div>
+            </div>
+            <div class="finding-desc">Le variabili seguono prefissi utili: <code>dlv -</code> per Data Layer Variables, <code>ee -</code> per ecommerce enhanced, <code>user -</code> per dati utente, <code>iubenda -</code> per consenso, <code>cjs -</code> per Custom JS helper. Struttura apprezzabile e manutenibile. Le variabili <code>leadsUserData.*</code> coprono multiple piattaforme (Facebook, Google, TikTok, Pinterest, Microsoft) con hashing SHA256.</div>
+          </div>
+        </div>
+      </div>
+
+      <input type="text" class="search-input" placeholder="Cerca variabile per nome..." oninput="searchVars(this.value)" id="varSearch">
+      <div class="table-scroll">
+        <table class="audit-table" id="varsTable">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nome</th>
+              <th>Tipo</th>
+            </tr>
+          </thead>
+          <tbody id="varsBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOLDERS -->
+  <div id="folders" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Struttura Folder</div>
+      <div class="section-count">14 folder</div>
+    </div>
+    <div class="section-body">
+      <div class="folder-grid">
+        <div class="folder-card"><div class="folder-name">GA4</div><div class="folder-id">#71</div></div>
+        <div class="folder-card"><div class="folder-name">GA4 - EEC</div><div class="folder-id">#503</div></div>
+        <div class="folder-card"><div class="folder-name">Facebook</div><div class="folder-id">#3</div></div>
+        <div class="folder-card"><div class="folder-name">TikTok</div><div class="folder-id">#154</div></div>
+        <div class="folder-card"><div class="folder-name">Google Ads</div><div class="folder-id">#392</div></div>
+        <div class="folder-card"><div class="folder-name">Iubenda</div><div class="folder-id">#10</div></div>
+        <div class="folder-card"><div class="folder-name">Magnews</div><div class="folder-id">#395</div></div>
+        <div class="folder-card"><div class="folder-name">Outbrain</div><div class="folder-id">#76</div></div>
+        <div class="folder-card"><div class="folder-name">Taboola</div><div class="folder-id">#407</div></div>
+        <div class="folder-card"><div class="folder-name">Ogury</div><div class="folder-id">#60</div></div>
+        <div class="folder-card"><div class="folder-name">Linkappeal</div><div class="folder-id">#396</div></div>
+        <div class="folder-card"><div class="folder-name">Quantcast</div><div class="folder-id">#397</div></div>
+        <div class="folder-card"><div class="folder-name">GAS FB</div><div class="folder-id">#50</div></div>
+        <div class="folder-card"><div class="folder-name">GAS AdRoll</div><div class="folder-id">#51</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUILT-IN VARIABLES -->
+  <div id="builtins" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Variabili Predefinite Abilitate</div>
+      <div class="section-count">29 variabili</div>
+    </div>
+    <div class="section-body">
+      <div class="builtin-grid">
+        <div class="builtin-tag"><div>Click Element</div><div class="builtin-type">clickElement</div></div>
+        <div class="builtin-tag"><div>Click Classes</div><div class="builtin-type">clickClasses</div></div>
+        <div class="builtin-tag"><div>Click ID</div><div class="builtin-type">clickId</div></div>
+        <div class="builtin-tag"><div>Click Target</div><div class="builtin-type">clickTarget</div></div>
+        <div class="builtin-tag"><div>Click URL</div><div class="builtin-type">clickUrl</div></div>
+        <div class="builtin-tag"><div>Click Text</div><div class="builtin-type">clickText</div></div>
+        <div class="builtin-tag"><div>Form Element</div><div class="builtin-type">formElement</div></div>
+        <div class="builtin-tag"><div>Form ID</div><div class="builtin-type">formId</div></div>
+        <div class="builtin-tag"><div>New History Fragment</div><div class="builtin-type">newHistoryFragment</div></div>
+        <div class="builtin-tag"><div>History Source</div><div class="builtin-type">historySource</div></div>
+        <div class="builtin-tag"><div>Debug Mode</div><div class="builtin-type">debugMode</div></div>
+        <div class="builtin-tag"><div>Random Number</div><div class="builtin-type">randomNumber</div></div>
+        <div class="builtin-tag"><div>Environment Name</div><div class="builtin-type">environmentName</div></div>
+        <div class="builtin-tag"><div>Video Provider</div><div class="builtin-type">videoProvider</div></div>
+        <div class="builtin-tag"><div>Video URL</div><div class="builtin-type">videoUrl</div></div>
+        <div class="builtin-tag"><div>Video Title</div><div class="builtin-type">videoTitle</div></div>
+        <div class="builtin-tag"><div>Video Duration</div><div class="builtin-type">videoDuration</div></div>
+        <div class="builtin-tag"><div>Video Percent</div><div class="builtin-type">videoPercent</div></div>
+        <div class="builtin-tag"><div>Video Visible</div><div class="builtin-type">videoVisible</div></div>
+        <div class="builtin-tag"><div>Video Status</div><div class="builtin-type">videoStatus</div></div>
+        <div class="builtin-tag"><div>Video Current Time</div><div class="builtin-type">videoCurrentTime</div></div>
+        <div class="builtin-tag"><div>Scroll Depth Threshold</div><div class="builtin-type">scrollDepthThreshold</div></div>
+        <div class="builtin-tag"><div>Scroll Depth Units</div><div class="builtin-type">scrollDepthUnits</div></div>
+        <div class="builtin-tag"><div>Scroll Direction</div><div class="builtin-type">scrollDepthDirection</div></div>
+        <div class="builtin-tag"><div>Page URL</div><div class="builtin-type">pageUrl</div></div>
+        <div class="builtin-tag"><div>Page Hostname</div><div class="builtin-type">pageHostname</div></div>
+        <div class="builtin-tag"><div>Page Path</div><div class="builtin-type">pagePath</div></div>
+        <div class="builtin-tag"><div>Referrer</div><div class="builtin-type">referrer</div></div>
+        <div class="builtin-tag"><div>Event</div><div class="builtin-type">event</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLATFORMS -->
+  <div id="platforms" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Piattaforme Gestite</div>
+      <div class="section-count">12 piattaforme</div>
+    </div>
+    <div class="section-body">
+      <div class="platform-grid">
+        <div class="platform-card active">
+          <div class="p-name">Google Analytics 4</div>
+          <div class="p-detail">Configuration + 40+ eventi custom + full EEC funnel</div>
+          <div class="p-status" style="color:var(--green)">Attivo · Completo</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">Google Ads</div>
+          <div class="p-detail">Global tag, Conversion Linker, Smart Lists (View Item, Purchase). Pageview in pausa (sostituito)</div>
+          <div class="p-status" style="color:var(--green)">Attivo · Parziale</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">TikTok Pixel</div>
+          <div class="p-detail">Init, ViewContent, AddToCart, CompletePayment — gestiti con Consent Mode</div>
+          <div class="p-status" style="color:var(--green)">Attivo</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">Iubenda (CMP)</div>
+          <div class="p-detail">Cookie consent + Google Consent Mode 2</div>
+          <div class="p-status" style="color:var(--green)">Attivo</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">Facebook / Meta</div>
+          <div class="p-detail">Pixel Trentino + eventi (moodboard, view_item_list). I tag legacy HTML/SS sono in pausa</div>
+          <div class="p-status" style="color:var(--orange)">Attivo (legacy in pausa)</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">Teads</div>
+          <div class="p-detail">All Pages con filtro lingue IT/DE/NL/PL/EN</div>
+          <div class="p-status" style="color:var(--green)">Attivo</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">Seeding Alliance</div>
+          <div class="p-detail">PageView + Conversion DE</div>
+          <div class="p-status" style="color:var(--green)">Attivo</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">Magnews</div>
+          <div class="p-detail">All Pages su visittrentino.info</div>
+          <div class="p-status" style="color:var(--green)">Attivo</div>
+        </div>
+        <div class="platform-card active">
+          <div class="p-name">DataClient</div>
+          <div class="p-detail">PageView, moodboard_click, view_item_list (template custom)</div>
+          <div class="p-status" style="color:var(--green)">Attivo</div>
+        </div>
+        <div class="platform-card paused-card">
+          <div class="p-name">Outbrain</div>
+          <div class="p-detail">All Pages + Custom events DE/PL — tutti in pausa</div>
+          <div class="p-status" style="color:#888">In pausa</div>
+        </div>
+        <div class="platform-card paused-card">
+          <div class="p-name">Taboola</div>
+          <div class="p-detail">All Pages + Custom — tutti in pausa</div>
+          <div class="p-status" style="color:#888">In pausa</div>
+        </div>
+        <div class="platform-card paused-card">
+          <div class="p-name">Ogury / Linkappeal / Quantcast</div>
+          <div class="p-detail">Pixel di varie piattaforme — tutti in pausa</div>
+          <div class="p-status" style="color:#888">In pausa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECOMMENDATIONS -->
+  <div id="recommendations" class="section-anchor"></div>
+  <div class="section-card">
+    <div class="section-header">
+      <div class="section-title">Raccomandazioni</div>
+      <div class="section-count">9 azioni consigliate</div>
+    </div>
+    <div class="section-body">
+      <div class="reco-list">
+        <div class="reco-item">
+          <div class="reco-num red">1</div>
+          <div class="reco-body">
+            <div class="reco-title">Rimuovere il tag #328 senza trigger</div>
+            <div class="reco-text">Il tag "SS FB - Pixel Generale" (ID 328) non ha nessun firing trigger. È già in pausa ma va eliminato dal container per evitare confusione. Verificare prima che non sia intenzionalmente orfano.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num red">2</div>
+          <div class="reco-body">
+            <div class="reco-title">Pulizia dei 46 tag in pausa</div>
+            <div class="reco-text">Valutare quali tag in pausa non verranno mai più riattivati (legacy GAS, vecchi wrapper FB HTML, Outbrain, Taboola, Ogury, Linkappeal, Quantcast) e procedere alla loro eliminazione. Consigliamo di creare una versione di backup prima di procedere. Questo ridurrà il container da 113 a circa 67 tag.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num">3</div>
+          <div class="reco-body">
+            <div class="reco-title">Correggere il typo nel trigger #290</div>
+            <div class="reco-text">Rinominare "DOM Rady - form generico tutte lingue" in "DOM Ready - form generico tutte lingue". Operazione banale ma necessaria per mantenere la leggibilità del container.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num">4</div>
+          <div class="reco-body">
+            <div class="reco-title">Audit dei trigger orfani</div>
+            <div class="reco-text">Verificare uno per uno i 18 trigger non usati come firing (#18, #42, #44, #48, #91, #95, #98, #133, #159, #287, #299, #305, #314, #321, #363, #518, #523, #573). Alcuni potrebbero essere usati solo come blocking trigger o in workspace diversi; quelli realmente inutilizzati vanno eliminati.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num">5</div>
+          <div class="reco-body">
+            <div class="reco-title">Unificare la naming convention</div>
+            <div class="reco-text">Adottare una struttura consistente per tutti i nuovi tag: <code>[Piattaforma] - [Tipo] - [Evento]</code> in inglese. Esempio: "GA4 - Event - view_item" è corretto; "SS FB - Richiesta Prenotazione Struttura" non segue lo stesso pattern. Creare un documento di governance interna per il container.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num">6</div>
+          <div class="reco-body">
+            <div class="reco-title">Valutare deprecazione trigger #9 (DOM Ready)</div>
+            <div class="reco-text">Il trigger "#9 - DOM Ready - richiesta prenotazione form struttura" è un domReady, meno preciso e potenzialmente instabile rispetto al customEvent "#481 - event - request_accommodation". Se entrambi coprono lo stesso caso, mantenere solo il customEvent e aggiornare i tag che utilizzano #9 come firing trigger.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num">7</div>
+          <div class="reco-body">
+            <div class="reco-title">Verificare lo stato di Outbrain e Taboola</div>
+            <div class="reco-text">Le folder Outbrain e Taboola contengono tag e trigger completamente in pausa. Se le campagne su queste piattaforme sono terminate definitivamente, eliminare tutti gli asset correlati (tag, trigger, variabili). Se potrebbero essere riattivate, considerare di spostarli in un workspace separato.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num">8</div>
+          <div class="reco-body">
+            <div class="reco-title">Verificare la folder "GAS AdRoll"</div>
+            <div class="reco-text">La folder #51 "GAS AdRoll" è presente ma potrebbe essere vuota o contenere tag ormai deprecati. Controllarne il contenuto e procedere alla rimozione se non più necessaria.</div>
+          </div>
+        </div>
+        <div class="reco-item">
+          <div class="reco-num">9</div>
+          <div class="reco-body">
+            <div class="reco-title">Documentare le variabili "scraped"</div>
+            <div class="reco-text">Le variabili Custom JS "scraped accomodation", "scraped accomodation id", "scraped checkin date", "scraped checkout date", "scraped accomodation name" (IDs 224, 225, 282, 283, 284) fanno scraping del DOM. Vanno documentate e monitorate perché sono fragili a fronte di modifiche al template del sito. Verificare se possono essere sostituite con variabili Data Layer più robuste.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /page-body -->
+</main>
+</div><!-- /layout -->
+
+<script>
+// DATA
+const tagsData = [
+  {id:"487",name:"GA4 - Event - accommodation_request_sent",type:"gaawe",paused:false,firing:["481"],blocking:[]},
+  {id:"491",name:"GA4 - Event - GA4event",type:"gaawe",paused:false,firing:["152"],blocking:[]},
+  {id:"496",name:"GA4 - Event - sorting_selection",type:"gaawe",paused:false,firing:["495"],blocking:[]},
+  {id:"502",name:"GA4 - Event - booking_request_apt",type:"gaawe",paused:false,firing:["166"],blocking:[]},
+  {id:"507",name:"GA4 - Event - get_call",type:"gaawe",paused:false,firing:["506"],blocking:[]},
+  {id:"517",name:"GA4 - Event - layout_switch_grid",type:"gaawe",paused:false,firing:["512"],blocking:[]},
+  {id:"532",name:"TikTok - ViewContent - IT",type:"html",paused:false,firing:["528","527"],blocking:["272","16"]},
+  {id:"536",name:"GA4 - Event - booking_payment_ok",type:"gaawe",paused:false,firing:["535"],blocking:[]},
+  {id:"540",name:"GA4 - EEC event - view_cart",type:"gaawe",paused:false,firing:["539"],blocking:[]},
+  {id:"547",name:"GA4 - Event - filter_selection",type:"gaawe",paused:false,firing:["546"],blocking:[]},
+  {id:"553",name:"GA4 - EEC event - purchase",type:"gaawe",paused:false,firing:["510"],blocking:[]},
+  {id:"557",name:"GA4 - Event - generate_lead (popup)",type:"gaawe",paused:false,firing:["72"],blocking:[]},
+  {id:"566",name:"GA4 - Event - accommodation_request_open_form",type:"gaawe",paused:false,firing:["140"],blocking:[]},
+  {id:"574",name:"GA4 - EEC event - view_item",type:"gaawe",paused:false,firing:["498"],blocking:[]},
+  {id:"578",name:"GA4 - EEC event - select_item",type:"gaawe",paused:false,firing:["577"],blocking:[]},
+  {id:"579",name:"GA4 - EEC event - view_item_list",type:"gaawe",paused:false,firing:["554"],blocking:[]},
+  {id:"582",name:"GA4 - Event - GAevent",type:"gaawe",paused:false,firing:["335","88"],blocking:[]},
+  {id:"593",name:"GA4 - Event - search_availability",type:"gaawe",paused:false,firing:["575"],blocking:[]},
+  {id:"599",name:"TikTok - CompletePayment - IT",type:"html",paused:false,firing:["535"],blocking:["272","16"]},
+  {id:"605",name:"TikTok - AddToCart - IT",type:"html",paused:false,firing:["478"],blocking:["272","16"]},
+  {id:"609",name:"GA4 - EEC event - add_shipping_info",type:"gaawe",paused:false,firing:["571"],blocking:[]},
+  {id:"619",name:"GA4 - EEC event - add_to_cart",type:"gaawe",paused:false,firing:["478"],blocking:[]},
+  {id:"622",name:"GA4 - Event - best_offer_cta",type:"gaawe",paused:false,firing:["587"],blocking:[]},
+  {id:"626",name:"GA4 - Event - pool_request_sent",type:"gaawe",paused:false,firing:["497"],blocking:[]},
+  {id:"627",name:"GA4 - EEC event - add_payment_info",type:"gaawe",paused:false,firing:["569"],blocking:[]},
+  {id:"629",name:"GA4 - Event - open_calender",type:"gaawe",paused:false,firing:["586"],blocking:[]},
+  {id:"632",name:"GA4 - Event - generate_lead (form)",type:"gaawe",paused:false,firing:["162"],blocking:[]},
+  {id:"633",name:"GA4 - EEC event - remove_from_cart",type:"gaawe",paused:false,firing:["576"],blocking:[]},
+  {id:"634",name:"GA4 - Event - request_booking_and_info-ex_1_4_20",type:"gaawe",paused:false,firing:["348","253"],blocking:[]},
+  {id:"639",name:"GA4 - EEC event - begin_checkout",type:"gaawe",paused:false,firing:["534"],blocking:[]},
+  {id:"647",name:"cHTML - phone clicks",type:"html",paused:false,firing:["2147479553"],blocking:[]},
+  {id:"157",name:"TikTok - Init - IT",type:"cvt (TikTok Init)",paused:false,firing:["2147479553","39"],blocking:["272","16"]},
+  {id:"36",name:"DataClient - PageView",type:"cvt (DataClient)",paused:false,firing:["2147479553","39"],blocking:["32","35","6","24","16"]},
+  {id:"41",name:"FB - Pixel Generale",type:"cvt (FB Pixel)",paused:false,firing:["2147479553","39"],blocking:["35","32","6","24","16"]},
+  {id:"223",name:"FB - Trentino - moodboard_click",type:"cvt (FB Pixel)",paused:false,firing:["74"],blocking:["16"]},
+  {id:"351",name:"FB - Trentino - view_item_list",type:"cvt (FB Pixel)",paused:false,firing:["193","194"],blocking:["16"]},
+  {id:"246",name:"Google Ads - Global",type:"sp (Ads Remarketing)",paused:false,firing:["2147479553"],blocking:[]},
+  {id:"371",name:"GA4 - Configuration",type:"googtag",paused:false,firing:["2147479573"],blocking:[]},
+  {id:"191",name:"Seeding Alliance - PageView",type:"cvt (Seeding Alliance)",paused:false,firing:["2147479553","39"],blocking:["6","24","16"]},
+  {id:"296",name:"Teads - All Pages - IT|DE|NL|PL|EN",type:"cvt (Teads)",paused:false,firing:["294","39"],blocking:["295","16"]},
+  {id:"304",name:"cHTML - Click menu voices",type:"html",paused:false,firing:["303"],blocking:[]},
+  {id:"75",name:"GA4 - Event - moodboard_click",type:"gaawe",paused:false,firing:["74"],blocking:[]},
+  {id:"118",name:"GA4 - Event - cta_click",type:"gaawe",paused:false,firing:["117"],blocking:[]},
+  {id:"135",name:"GA4 - Event - page_view",type:"gaawe",paused:false,firing:["2147479553"],blocking:[]},
+  {id:"138",name:"GA4 - Event - newsletter_open_form",type:"gaawe",paused:false,firing:["137"],blocking:[]},
+  {id:"143",name:"GA4 - Event - email_us",type:"gaawe",paused:false,firing:["142"],blocking:[]},
+  {id:"185",name:"cHTML - session timer",type:"html",paused:false,firing:["2147479553"],blocking:[]},
+  {id:"189",name:"GA4 - Event - share",type:"gaawe",paused:false,firing:["188"],blocking:[]},
+  {id:"214",name:"Google Tag - AW-11414017529",type:"googtag",paused:false,firing:["2147479573"],blocking:[]},
+  {id:"242",name:"GA4 - Event - menu",type:"gaawe",paused:false,firing:["241"],blocking:[]},
+  {id:"260",name:"GA4 - Event - click_email_poi",type:"gaawe",paused:false,firing:["220","140","248"],blocking:[]},
+  {id:"264",name:"GA4 - Event - get_direction PDP",type:"gaawe",paused:false,firing:["263"],blocking:[]},
+  {id:"275",name:"Iubenda",type:"cvt (Iubenda CMP)",paused:false,firing:["2147479572"],blocking:[]},
+  {id:"288",name:"Google Consent Mode 2 - Forced - Update (Iubenda)",type:"cvt (Consent Mode)",paused:false,firing:["356"],blocking:[]},
+  {id:"320",name:"GA4 - Event - cta_show_phone",type:"gaawe",paused:false,firing:["319"],blocking:[]},
+  {id:"332",name:"GA4 - Event - richiesta informazioni",type:"gaawe",paused:false,firing:["290"],blocking:[]},
+  {id:"343",name:"GA4 - Event - get_direction",type:"gaawe",paused:false,firing:["231"],blocking:[]},
+  {id:"355",name:"Magnews - All Pages - visittrentino.info",type:"html",paused:false,firing:["2147479553","39"],blocking:["16"]},
+  {id:"358",name:"DataClient - moodboard_click",type:"cvt (DataClient)",paused:false,firing:["74"],blocking:["16"]},
+  {id:"359",name:"Google Tag - AW-10859206945",type:"googtag",paused:false,firing:["2147479573"],blocking:[]},
+  {id:"372",name:"Seeding Alliance - Conversion - DE",type:"cvt (Seeding Alliance)",paused:false,firing:["83"],blocking:["6","24","16"]},
+  {id:"375",name:"cHTML - HTML5 video listener",type:"html",paused:false,firing:["2147479553"],blocking:[]},
+  {id:"377",name:"GA4 - Event - website_accommodations",type:"gaawe",paused:false,firing:["238"],blocking:[]},
+  {id:"380",name:"GA4 - Event - video",type:"gaawe",paused:false,firing:["325"],blocking:[]},
+  {id:"382",name:"GA4 - Event - outbound_links",type:"gaawe",paused:false,firing:["350"],blocking:["255","381"]},
+  {id:"389",name:"DataClient - view_item_list",type:"cvt (DataClient)",paused:false,firing:["193","194"],blocking:["16"]},
+  {id:"393",name:"Conversion Linker",type:"gclidw",paused:false,firing:["2147479553"],blocking:[]},
+  // PAUSED
+  {id:"25",name:"SS FB - Richiesta Prenotazione Struttura Ricettiva",type:"gaawe",paused:true,firing:["9"],blocking:["6","24","16"]},
+  {id:"56",name:"GAS FB - Pixel Generale",type:"html",paused:true,firing:["54","53"],blocking:["16"]},
+  {id:"59",name:"GAS - FB - cHTML - ViewHotel",type:"html",paused:true,firing:["57"],blocking:["16"]},
+  {id:"65",name:"SS FB - Lead - email",type:"gaawe",paused:true,firing:["64"],blocking:["16"]},
+  {id:"80",name:"Outbrain - All Pages",type:"cvt (Outbrain)",paused:true,firing:["2147479553","39"],blocking:["16"]},
+  {id:"84",name:"Outbrain - Custom - Click Trentino",type:"cvt (Outbrain)",paused:true,firing:["83","82"],blocking:["16"]},
+  {id:"161",name:"Google Ads - Pageview",type:"awct",paused:true,firing:["2147479553"],blocking:[]},
+  {id:"184",name:"SS FB - Apertura Form Newsletter",type:"gaawe",paused:true,firing:["137"],blocking:["6","24","16"]},
+  {id:"187",name:"W - FB - richiesta prenotazione",type:"html",paused:true,firing:["9"],blocking:["16"]},
+  {id:"202",name:"FB - Iscrizione Newsletter Confermata",type:"html",paused:true,firing:["162","72"],blocking:["6","24","16"]},
+  {id:"205",name:"SS FB - Lettura articolo",type:"gaawe",paused:true,firing:["204"],blocking:["6","24","16"]},
+  {id:"211",name:"Outbrain - Custom - 30 seconds view",type:"cvt (Outbrain)",paused:true,firing:["2147479553"],blocking:["16"]},
+  {id:"235",name:"GAS - FB - cHTML - ViewContent",type:"html",paused:true,firing:["54","53"],blocking:["16"]},
+  {id:"237",name:"W - FB - Lead - sito",type:"html",paused:true,firing:["236"],blocking:["16"]},
+  {id:"250",name:"FB - Richiesta Prenotazione Struttura Ricettiva",type:"html",paused:true,firing:["9"],blocking:["6","24","16"]},
+  {id:"289",name:"FB - Richiesta Prenotazione APT",type:"html",paused:true,firing:["166"],blocking:["6","24","16"]},
+  {id:"291",name:"FB - Richiesta Informazioni",type:"html",paused:true,firing:["290"],blocking:["6","24","16"]},
+  {id:"292",name:"FB - Lettura articolo",type:"html",paused:true,firing:["204"],blocking:["6","24","16"]},
+  {id:"293",name:"FB - Button Download PDF",type:"html",paused:true,firing:["46"],blocking:["6","24","16"]},
+  {id:"307",name:"SS FB - Button Download PDF",type:"gaawe",paused:true,firing:["46"],blocking:["6","24","16"]},
+  {id:"313",name:"FB - Apertura Form Newsletter",type:"html",paused:true,firing:["137"],blocking:["24","6","16"]},
+  {id:"318",name:"SS FB - Lead - sito",type:"gaawe",paused:true,firing:["236"],blocking:["16"]},
+  {id:"328",name:"SS FB - Pixel Generale ⚠ NESSUN FIRING TRIGGER",type:"gaawe",paused:true,firing:[],blocking:["32","35","6","24","16"]},
+  {id:"333",name:"SS FB - Richiesta Informazioni",type:"gaawe",paused:true,firing:["290"],blocking:["6","24","16"]},
+  {id:"344",name:"Ogury Pixel",type:"html",paused:true,firing:["334","139","61","94","104"],blocking:["16"]},
+  {id:"352",name:"SS FB - richiesta prenotazione",type:"gaawe",paused:true,firing:["9"],blocking:["16"]},
+  {id:"366",name:"Linkappeal - Pixel base",type:"html",paused:true,firing:["39"],blocking:["197","16"]},
+  {id:"374",name:"SS FB - Richiesta Prenotazione APT",type:"gaawe",paused:true,firing:["166"],blocking:["6","24","16"]},
+  {id:"376",name:"Quantcast - Pixel Tag",type:"html",paused:true,firing:["2147479553"],blocking:[]},
+  {id:"378",name:"W - FB - Lead - email",type:"html",paused:true,firing:["64"],blocking:["16"]},
+  {id:"379",name:"SS FB - Iscrizione Newsletter Confermata",type:"gaawe",paused:true,firing:["162","72"],blocking:["6","24","16"]},
+  {id:"405",name:"Taboola - All Pages",type:"cvt (Taboola)",paused:true,firing:["2147479553","39"],blocking:["16"]},
+  {id:"406",name:"Taboola - Custom - CLICKTRENTINOPL",type:"cvt (Taboola)",paused:true,firing:["82","323"],blocking:["16"]},
+  {id:"499",name:"SS FB - visualizza struttura",type:"gaawe",paused:true,firing:["498"],blocking:["16"]},
+  {id:"519",name:"W - FB - visualizza struttura",type:"html",paused:true,firing:["498"],blocking:["16"]},
+  {id:"541",name:"FB - Event - Contacts Accommodation",type:"html",paused:true,firing:["506"],blocking:["6","24","16"]},
+  {id:"556",name:"FB - Purchase - Prenotazione effettuata",type:"html",paused:true,firing:["535"],blocking:["24","6","16"]},
+  {id:"572",name:"SS FB - Checkout - Inserimento dati",type:"gaawe",paused:true,firing:["569","571","534","539"],blocking:["6","24","16"]},
+  {id:"581",name:"Google Ads - View Item",type:"sp",paused:true,firing:["498"],blocking:[]},
+  {id:"588",name:"W - FB - Lead - chiama",type:"html",paused:true,firing:["506"],blocking:["16"]},
+  {id:"611",name:"Google Ads - Purchase",type:"sp",paused:true,firing:["535"],blocking:[]},
+  {id:"618",name:"SS FB - Purchase - Prenotazione effettuata",type:"gaawe",paused:true,firing:["535"],blocking:["6","24","16"]},
+  {id:"620",name:"SS FB - Lead - chiama",type:"gaawe",paused:true,firing:["506"],blocking:["16"]},
+  {id:"623",name:"SS FB - Event - Contacts Accommodation",type:"gaawe",paused:true,firing:["506"],blocking:["6","24","16"]},
+  {id:"637",name:"Google Ads - Conversion - add_to_cart",type:"sp",paused:true,firing:["631"],blocking:[]},
+  {id:"641",name:"FB - Checkout - Inserimento dati",type:"html",paused:true,firing:["571","569","539","534"],blocking:["24","6","16"]}
+];
+
+const triggersData = [
+  {id:"478",name:"event - add_to_cart",type:"customEvent",note:""},
+  {id:"481",name:"event - request_accommodation",type:"customEvent",note:""},
+  {id:"495",name:"event - sorting_selection",type:"customEvent",note:""},
+  {id:"497",name:"event - pool_request",type:"customEvent",note:""},
+  {id:"498",name:"event - view_item",type:"customEvent",note:""},
+  {id:"506",name:"event - click_phone",type:"customEvent",note:""},
+  {id:"510",name:"event - purchase",type:"customEvent",note:""},
+  {id:"512",name:"event - layout_switch_grid",type:"customEvent",note:""},
+  {id:"518",name:"event - order_by",type:"customEvent",note:"Potenzialmente orfano (non assegnato a tag attivi)"},
+  {id:"523",name:"event - filter_by",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"527",name:"Event - Detail Patricia",type:"customEvent",note:"TikTok ViewContent"},
+  {id:"528",name:"Event - EE showDetails",type:"customEvent",note:"TikTok ViewContent"},
+  {id:"534",name:"event - begin_checkout",type:"customEvent",note:""},
+  {id:"535",name:"event - purchase_ga4",type:"customEvent",note:""},
+  {id:"539",name:"event - view_cart",type:"customEvent",note:""},
+  {id:"546",name:"event - filter_selection",type:"customEvent",note:""},
+  {id:"554",name:"event - view_item_list",type:"customEvent",note:""},
+  {id:"569",name:"event - add_payment_info",type:"customEvent",note:""},
+  {id:"571",name:"event - add_shipping_info",type:"customEvent",note:""},
+  {id:"573",name:"Clic - click mailto",type:"linkClick",note:"Potenzialmente orfano"},
+  {id:"575",name:"event - search_availability",type:"customEvent",note:""},
+  {id:"576",name:"event - remove_from_cart",type:"customEvent",note:""},
+  {id:"577",name:"event - select_item",type:"customEvent",note:""},
+  {id:"586",name:"event - open_calender",type:"customEvent",note:""},
+  {id:"587",name:"event - best_offer_cta",type:"customEvent",note:""},
+  {id:"631",name:"event - addToCart - dove dormire",type:"customEvent",note:""},
+  {id:"18",name:"Pages NOT stage.visittrentino.info",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"356",name:"event - iubenda_gtm_consent_event",type:"customEvent",note:"Consent Mode"},
+  {id:"39",name:"Iubenda - Ads - Consent Given",type:"customEvent",note:"Consent"},
+  {id:"101",name:"Iubenda - Personalization - Consent Given",type:"customEvent",note:"Consent"},
+  {id:"199",name:"Iubenda - Analytics - Consent Given",type:"customEvent",note:"Consent"},
+  {id:"133",name:"Event - EE List Click",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"193",name:"event - productImpression (no struttura 206291)",type:"customEvent",note:""},
+  {id:"194",name:"Event - Impression Patricia",type:"customEvent",note:""},
+  {id:"253",name:"Form - Demi enquire success",type:"formSubmission",note:""},
+  {id:"350",name:"Clic - Outbound link click",type:"linkClick",note:""},
+  {id:"6",name:"appspot referrer",type:"customEvent",note:"Solo blocking trigger"},
+  {id:"9",name:"DOM Ready - richiesta prenotazione form struttura",type:"domReady",note:"Potenziale duplicato del customEvent #481"},
+  {id:"16",name:"Iubenda - Ads - NOT Accepted",type:"customEvent",note:"Blocking trigger principale ads"},
+  {id:"24",name:"appspot url",type:"customEvent",note:"Solo blocking trigger"},
+  {id:"32",name:"History - Cambiamento URL webcams",type:"historyChange",note:"Blocking trigger"},
+  {id:"35",name:"History - Fragment Change",type:"historyChange",note:"Blocking trigger"},
+  {id:"42",name:"click - button aggiunta al carrello 2",type:"click",note:"Potenzialmente orfano"},
+  {id:"44",name:"click - button aggiunta al carrello",type:"click",note:"Potenzialmente orfano"},
+  {id:"46",name:"FB - Track PDF",type:"linkClick",note:""},
+  {id:"48",name:"PageView - Prenotazione effettuata",type:"pageview",note:"Potenzialmente orfano"},
+  {id:"53",name:"Pageview - GAS Scoiattolo",type:"pageview",note:"Legacy GAS"},
+  {id:"54",name:"Pageview - GAS Alpi",type:"pageview",note:"Legacy GAS"},
+  {id:"57",name:"Pageview - GAS DRD",type:"pageview",note:"Legacy GAS"},
+  {id:"61",name:"Click - DE",type:"linkClick",note:""},
+  {id:"64",name:"contact us - email",type:"customEvent",note:""},
+  {id:"72",name:"click - iscrizione newsletter popup",type:"click",note:""},
+  {id:"74",name:"click - moodboard click",type:"click",note:""},
+  {id:"82",name:"click - click on arrow - PL",type:"click",note:""},
+  {id:"83",name:"click - click on arrow - DE",type:"click",note:""},
+  {id:"88",name:"event - genericGtmEvent",type:"customEvent",note:""},
+  {id:"91",name:"PageView - TYP",type:"pageview",note:"Potenzialmente orfano"},
+  {id:"94",name:"Scroll_50 - DE",type:"scrollDepth",note:""},
+  {id:"95",name:"Event - Purchase - dove dormire",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"98",name:"History Change - gtm.historyChange",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"104",name:"Session Duration_10",type:"timer",note:""},
+  {id:"117",name:"event - cta_click",type:"customEvent",note:""},
+  {id:"137",name:"DOM Ready - form di iscrizione newsletter",type:"domReady",note:""},
+  {id:"139",name:"Event on Marketing Accepted - PL Ogury DE",type:"customEvent",note:"Ogury"},
+  {id:"140",name:"Event on accomodation request PDP",type:"customEvent",note:""},
+  {id:"142",name:"Event on click email PDP /dove-dormire",type:"customEvent",note:""},
+  {id:"152",name:"event - GA4event",type:"customEvent",note:""},
+  {id:"159",name:"event - sign_up",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"162",name:"DOM Ready - Conferma iscrizione newsletter",type:"domReady",note:""},
+  {id:"166",name:"DOM Ready - prenotazione generica tutte lingue",type:"domReady",note:""},
+  {id:"188",name:"clic - social share",type:"click",note:""},
+  {id:"197",name:"NO - /gusto-autunno",type:"customEvent",note:"Solo blocking trigger"},
+  {id:"204",name:"DOM Ready - Lettura articolo",type:"domReady",note:""},
+  {id:"220",name:"click - click email link",type:"linkClick",note:""},
+  {id:"231",name:"Event on map PLP /dove-dormire",type:"customEvent",note:""},
+  {id:"236",name:"contact us - sito",type:"customEvent",note:""},
+  {id:"238",name:"event - genericGtmEvent - click website PLP|PDP",type:"customEvent",note:""},
+  {id:"241",name:"Event on header menu",type:"customEvent",note:""},
+  {id:"248",name:"click - accommodation email click",type:"click",note:""},
+  {id:"255",name:"click pick date arrow",type:"linkClick",note:"Blocking trigger"},
+  {id:"263",name:"Event on click map PDP /dove-dormire",type:"customEvent",note:""},
+  {id:"272",name:"Pages NOT IT",type:"customEvent",note:"Blocking trigger TikTok/FB"},
+  {id:"278",name:"Iubenda - Personalization - NOT Accepted",type:"customEvent",note:""},
+  {id:"287",name:"YES - iubenda_consent_given_purpose_1",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"290",name:"DOM Rady - form generico tutte lingue ⚠ TYPO",type:"domReady",note:"TYPO: 'DOM Rady' dovrebbe essere 'DOM Ready'"},
+  {id:"294",name:"Pageview - IT|DE|NL|PL|EN",type:"pageview",note:""},
+  {id:"295",name:"Country NOT IT|DE|NL|PL|EN",type:"customEvent",note:"Blocking trigger Teads"},
+  {id:"299",name:"event - form_error",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"303",name:"Window Loaded",type:"windowLoaded",note:""},
+  {id:"305",name:"GA4 - accommodation_request_sent",type:"domReady",note:"Potenzialmente orfano / duplicato"},
+  {id:"314",name:"Pageview - IT DE",type:"pageview",note:"Potenzialmente orfano"},
+  {id:"319",name:"Event on click show_phone",type:"customEvent",note:""},
+  {id:"321",name:"Pages www.visittrentino.info",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"323",name:"click - click on arrow - CZ",type:"click",note:""},
+  {id:"325",name:"YouTube",type:"youTubeVideo",note:""},
+  {id:"334",name:"Ogury - LP Page view",type:"pageview",note:""},
+  {id:"335",name:"event - GAevent",type:"customEvent",note:""},
+  {id:"348",name:"DOM Ready - richieste mail totali",type:"domReady",note:""},
+  {id:"363",name:"event - login",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"367",name:"Iubenda - Analytics - NOT Accepted",type:"customEvent",note:"Potenzialmente orfano"},
+  {id:"381",name:"Main Menu Click",type:"linkClick",note:"Blocking trigger outbound"}
+];
+
+const varsData = [
+  {id:"479",name:"GA4 ID",type:"smm"},{id:"480",name:"dlv - start_date",type:"v"},{id:"482",name:"event ID",type:"cvt_M63B8"},{id:"483",name:"GA4 - Event Settings",type:"gtes"},{id:"484",name:"dlv - end_date",type:"v"},{id:"485",name:"dlv - accommodation_name",type:"v"},{id:"486",name:"dlv - newsletter_sign_up",type:"v"},{id:"488",name:"dlv - min_price_range",type:"v"},{id:"489",name:"dlv - leadsUserData.tiktok.sha256_phone_number",type:"v"},{id:"490",name:"dlv - eventname",type:"v"},{id:"492",name:"dlv - leadsUserData.facebook.sha256_postal_code",type:"v"},{id:"493",name:"dlv - leadsUserData.google.address.city",type:"v"},{id:"494",name:"dlv - value",type:"v"},{id:"500",name:"dlv - leadsUserData.facebook.sha256_first_name",type:"v"},{id:"501",name:"ee - ecommerce.item_list_name",type:"v"},{id:"504",name:"ee - ecommerce.shipping",type:"v"},{id:"505",name:"Click Protocol",type:"jsm"},{id:"508",name:"dlv - leadsUserData.google.sha256_email_address",type:"v"},{id:"509",name:"ee - ecommerce.items.price",type:"v"},{id:"513",name:"dlv - filter_value_to",type:"v"},{id:"514",name:"dlv - leadsUserData.facebook.sha256_last_name",type:"v"},{id:"515",name:"dlv - category",type:"v"},{id:"516",name:"dlv - type",type:"v"},{id:"520",name:"ee - ecommerce",type:"v"},{id:"521",name:"ee - ecommerce.items",type:"jsm"},{id:"522",name:"ee - ecommerce.items - list of item_name",type:"jsm"},{id:"524",name:"dlv - leadsUserData.google.address.sha256_street",type:"v"},{id:"525",name:"dlv - rooms",type:"v"},{id:"526",name:"ee - ecommerce.items.0.item_id",type:"v"},{id:"529",name:"ee - ecommerce.items.0.location_id",type:"v"},{id:"530",name:"ee - ecommerce.items.0.item_category",type:"v"},{id:"531",name:"ee - ecommerce.items.0.item_name",type:"v"},{id:"533",name:"dlv - price_range",type:"v"},{id:"537",name:"dlv - leadsUserData.facebook.sha256_birthdate",type:"v"},{id:"538",name:"ee - ecommerce.items.0.price",type:"v"},{id:"542",name:"dlv - filter_category",type:"v"},{id:"543",name:"dlv - filter_name",type:"v"},{id:"544",name:"dlv - filter_value",type:"v"},{id:"545",name:"dlv - filter_value_from",type:"v"},{id:"548",name:"ee - ecommerce.affiliation",type:"v"},{id:"549",name:"ee - ecommerce.items - list of item_category",type:"jsm"},{id:"550",name:"ee - ecommerce.value",type:"v"},{id:"551",name:"ee - ecommerce.tax",type:"v"},{id:"552",name:"ee - net_revenue",type:"jsm"},{id:"555",name:"ee - ecommerce.items - list of item_id",type:"jsm"},{id:"558",name:"dlv - room_name",type:"v"},{id:"559",name:"user - visitorLifetimeValue",type:"v"},{id:"560",name:"dlv - leadsUserData.microsoft.sha256_email_address",type:"v"},{id:"561",name:"dlv - leadsUserData.google.address.sha256_first_name",type:"v"},{id:"562",name:"ee - ecommerce.promotion_name",type:"v"},{id:"563",name:"dlv - leadsUserData",type:"v"},{id:"564",name:"dlv - guests",type:"v"},{id:"565",name:"user - customerTotalOrderValue",type:"v"},{id:"567",name:"dlv - leadsUserData.facebook.sha256_phone_number",type:"v"},{id:"568",name:"dlv - duration_nights",type:"v"},{id:"570",name:"ee - ecommerce.promotion_id",type:"v"},{id:"580",name:"Ads - remarketing - items",type:"jsm"},{id:"583",name:"ee - ecommerce.currency",type:"v"},{id:"584",name:"dlv - leadsUserData.facebook.sha256_email_address",type:"v"},{id:"585",name:"dlv - leadsUserData.microsoft.sha256_phone_number",type:"v"},{id:"589",name:"ee - ecommerce.coupon",type:"v"},{id:"590",name:"ee - ecommerce.items.item_name",type:"v"},{id:"591",name:"ee - ecommerce.payment_type",type:"v"},{id:"592",name:"dlv - search_type",type:"v"},{id:"594",name:"ee - ecommerce.items.item_id",type:"v"},{id:"595",name:"ee - impressions - id",type:"v"},{id:"596",name:"dlv - leadsUserData.facebook.sha256_region",type:"v"},{id:"597",name:"dlv - leadsUserData.facebook.sha256_country",type:"v"},{id:"598",name:"ee - ecommerce.creative_name",type:"v"},{id:"600",name:"user - visitorType",type:"v"},{id:"601",name:"dlv - towns",type:"v"},{id:"602",name:"dlv - leadsUserData.facebook.sha256_city",type:"v"},{id:"603",name:"dlv - leadsUserData.google.address.region",type:"v"},{id:"604",name:"dlv - leadsUserData.google.address.postal_cod",type:"v"},{id:"606",name:"dlv - max_price_range",type:"v"},{id:"607",name:"dlv - order_hash",type:"v"},{id:"608",name:"ee - ecommerce.shipping_tier",type:"v"},{id:"610",name:"user - visitorExistingCustomer",type:"v"},{id:"612",name:"dlv - leadsUserData.google.sha256_phone_number",type:"v"},{id:"613",name:"user - visitorId",type:"v"},{id:"614",name:"dlv - leadsUserData.google.address.sha256_last_name",type:"v"},{id:"615",name:"ee - ecommerce.items.item_category",type:"v"},{id:"616",name:"dlv - location",type:"v"},{id:"617",name:"dlv - leadsUserData.facebook.sha256_gender",type:"v"},{id:"621",name:"dlv - additional_service_name",type:"v"},{id:"624",name:"dlv - teaser_title",type:"v"},{id:"625",name:"dlv - mealtypes",type:"v"},{id:"628",name:"dlv - leadsUserData.pinterest.sha256_email_address",type:"v"},{id:"630",name:"ee - ecommerce.transaction_id",type:"v"},{id:"635",name:"ee - ecommerce.items - list of price",type:"jsm"},{id:"636",name:"dlv - brochure_name",type:"v"},{id:"638",name:"dlv - leadsUserData.tiktok.sha256_email_address",type:"v"},{id:"640",name:"dlv - leadsUserData.google.address.country",type:"v"},{id:"642",name:"ee - ecommerce.item_list_id",type:"v"},{id:"643",name:"ee - ecommerce.creative_slot",type:"v"},{id:"644",name:"user - visitorLoginState",type:"v"},
+  {id:"369",name:"dlv - traffic_type",type:"remm"},{id:"14",name:"iubenda - cookieValue",type:"k"},{id:"15",name:"iubenda - ad_storage",type:"remm"},{id:"27",name:"iubenda - personalization",type:"remm"},{id:"198",name:"iubenda - analytics_storage",type:"remm"},{id:"12",name:"lang",type:"jsm"},{id:"31",name:"get path with fragment",type:"jsm"},{id:"47",name:"eventLabel",type:"v"},{id:"69",name:"eventAction",type:"v"},{id:"179",name:"Modalità debug",type:"dbg"},{id:"192",name:"impressions Id struttura",type:"v"},{id:"227",name:"taboola - pixel id",type:"c"},{id:"240",name:"eventCategory",type:"v"},{id:"309",name:"deviceType",type:"jsm"},{id:"5",name:"FB EventID",type:"cvt_M63B8"},{id:"7",name:"submitRequest query param",type:"u"},{id:"8",name:"enquirySuccess query param",type:"u"},{id:"23",name:"server setting variable",type:"gtes"},{id:"26",name:"data - data-ga-event",type:"aev"},{id:"37",name:"FB Pixel ID Trentino",type:"c"},{id:"52",name:"tableGAS",type:"remm"},{id:"55",name:"FB Pixel ID GAS",type:"c"},{id:"58",name:"idHotel",type:"smm"},{id:"62",name:"genericEventAction",type:"v"},{id:"63",name:"genericEventCategory",type:"v"},{id:"73",name:"cjs - get moodboard class",type:"jsm"},{id:"77",name:"outbraind - pixel id",type:"c"},{id:"81",name:"cjs - get arrow class",type:"jsm"},{id:"89",name:"genericEventLabel",type:"v"},{id:"116",name:"dlv - cta_text",type:"v"},{id:"155",name:"TikTok ID",type:"c"},{id:"224",name:"scraped accomodation",type:"jsm"},{id:"225",name:"scraped accomodation id",type:"jsm"},{id:"254",name:"dlv - error_message",type:"v"},{id:"256",name:"dlv - error_field",type:"v"},{id:"259",name:"URL - query - mail_id",type:"aev"},{id:"282",name:"scraped checkin date",type:"jsm"},{id:"283",name:"scraped checkout date",type:"jsm"},{id:"284",name:"scraped accomodation name",type:"jsm"},{id:"300",name:"dlv - form_name",type:"v"},{id:"302",name:"cjs - get user agent",type:"jsm"},{id:"330",name:"dlv - eventId",type:"v"},{id:"370",name:"Content Group",type:"remm"}
+];
+
+function getTagCategory(type) {
+  if (type.includes('gaawe') || type.includes('googtag')) return 'ga4';
+  if (type.includes('FB') || type.toLowerCase().includes('fb') || type.includes('5RM3Q')) return 'fb';
+  if (type.includes('TikTok') || type.includes('156')) return 'tiktok';
+  if (type.includes('sp') || type.includes('gclidw') || type.includes('awct') || type.includes('Ads')) return 'ads';
+  if (type === 'html') return 'html';
+  return 'other';
+}
+
+function getTypeBadgeClass(type) {
+  if (type.includes('gaawe') || type.includes('googtag')) return 'ga4';
+  if (type.toLowerCase().includes('fb') || type.includes('5RM3Q')) return 'fb';
+  if (type.toLowerCase().includes('tiktok') || type.includes('156')) return 'tiktok';
+  if (type.includes('sp') || type.includes('gclidw') || type.includes('awct')) return 'ads';
+  if (type === 'html') return 'html';
+  if (type.includes('Consent') || type.includes('Iubenda') || type.includes('K8GSG') || type.includes('KFGZD')) return 'consent';
+  return 'other';
+}
+
+function renderTags(data) {
+  const tbody = document.getElementById('tagsBody');
+  tbody.innerHTML = data.map(t => {
+    const cat = getTagCategory(t.type + ' ' + t.name);
+    const firingStr = t.firing.length ? t.firing.map(f => `<code style="font-size:10px;background:#f0f0f0;padding:1px 4px;border-radius:3px;margin-right:2px">#${f}</code>`).join('') : '<span style="color:#E52217;font-weight:700">NESSUNO</span>';
+    const blockingStr = t.blocking.length ? t.blocking.map(f => `<code style="font-size:10px;background:#fff0f0;padding:1px 4px;border-radius:3px;margin-right:2px;color:#E52217">#${f}</code>`).join('') : '—';
+    return `<tr class="tag-row" data-status="${t.paused?'paused':'active'}" data-category="${cat}">
+      <td><span class="tag-id">#${t.id}</span></td>
+      <td><span class="tag-name">${t.name}</span></td>
+      <td><span class="type-badge ${getTypeBadgeClass(t.type + ' ' + t.name)}">${t.type}</span></td>
+      <td><span class="status-badge ${t.paused?'paused':'active'}">${t.paused?'In pausa':'Attivo'}</span></td>
+      <td style="min-width:100px">${firingStr}</td>
+      <td style="min-width:80px">${blockingStr}</td>
+    </tr>`;
+  }).join('');
+}
+
+function filterTags(filter, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.remove('active');
+    b.style.background = '';
+    b.style.color = '';
+    b.style.borderColor = '';
+  });
+  btn.classList.add('active');
+  document.querySelectorAll('.tag-row').forEach(row => {
+    const status = row.dataset.status;
+    const cat = row.dataset.category;
+    let show = false;
+    if (filter === 'all') show = true;
+    else if (filter === 'active') show = status === 'active';
+    else if (filter === 'paused') show = status === 'paused';
+    else show = cat === filter;
+    row.style.display = show ? '' : 'none';
+  });
+}
+
+function searchTags(q) {
+  const lq = q.toLowerCase();
+  document.querySelectorAll('.tag-row').forEach(row => {
+    const name = row.querySelector('.tag-name').textContent.toLowerCase();
+    const id = row.querySelector('.tag-id').textContent.toLowerCase();
+    row.style.display = (!q || name.includes(lq) || id.includes(lq)) ? '' : 'none';
+  });
+}
+
+function renderTriggers(data) {
+  const tbody = document.getElementById('triggersBody');
+  const typeColors = {
+    customEvent:'#5781FF', domReady:'#551FC4', pageview:'#118541', click:'#DB5E29',
+    linkClick:'#CE2A59', historyChange:'#484848', scrollDepth:'#F4A61A', timer:'#888',
+    youTubeVideo:'#c0392b', windowLoaded:'#2980b9', formSubmission:'#16a085'
+  };
+  tbody.innerHTML = data.map(t => {
+    const isOrphan = t.note.toLowerCase().includes('orfano');
+    const isTypo = t.note.toLowerCase().includes('typo');
+    const color = typeColors[t.type] || '#888';
+    return `<tr class="trigger-row">
+      <td><span class="tag-id">#${t.id}</span></td>
+      <td><span class="tag-name" style="${isOrphan?'color:#DB5E29':''}">${t.name}</span></td>
+      <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;background:${color}22;color:${color};font-family:monospace">${t.type}</span></td>
+      <td style="font-size:11px;color:${isOrphan?'#DB5E29':isTypo?'#E52217':'var(--grey-label)'}">${t.note || '—'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function searchTriggers(q) {
+  const lq = q.toLowerCase();
+  document.querySelectorAll('.trigger-row').forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = (!q || text.includes(lq)) ? '' : 'none';
+  });
+}
+
+function renderVars(data) {
+  const tbody = document.getElementById('varsBody');
+  const typeColors = {
+    v:'#5781FF', jsm:'#551FC4', remm:'#DB5E29', c:'#118541', gtes:'#CE2A59',
+    k:'#888', dbg:'#484848', u:'#F4A61A', aev:'#2980b9', smm:'#16a085'
+  };
+  tbody.innerHTML = data.map(v => {
+    const color = typeColors[v.type] || '#888';
+    return `<tr class="var-row">
+      <td><span class="tag-id">#${v.id}</span></td>
+      <td><span class="tag-name">${v.name}</span></td>
+      <td><span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;background:${color}22;color:${color};font-family:monospace">${v.type}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function searchVars(q) {
+  const lq = q.toLowerCase();
+  document.querySelectorAll('.var-row').forEach(row => {
+    const text = row.textContent.toLowerCase();
+    row.style.display = (!q || text.includes(lq)) ? '' : 'none';
+  });
+}
+
+// Sidebar active on scroll
+function updateActiveNav() {
+  const sections = ['overview','findings','tags','triggers','variables','folders','builtins','platforms','recommendations'];
+  const scrollPos = window.scrollY + 80;
+  for (let i = sections.length - 1; i >= 0; i--) {
+    const el = document.getElementById(sections[i]);
+    if (el && el.offsetTop <= scrollPos) {
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      const navItems = document.querySelectorAll('.nav-item');
+      if (navItems[i]) navItems[i].classList.add('active');
+      break;
+    }
+  }
+}
+
+window.addEventListener('scroll', updateActiveNav);
+
+// Init
+renderTags(tagsData);
+renderTriggers(triggersData);
+renderVars(varsData);
+</script>
+</body>
+</html>
